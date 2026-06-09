@@ -35,7 +35,23 @@ CI (`.github/workflows/ci.yml`) runs lint → typecheck → test → build on ev
   Project → Settings → Environment Variables.
 
 To host under a sub-path (e.g. `track.cotrackpro.com/moral-injury/`), set `base` in
-`vite.config.ts` to `"/moral-injury/"` before building.
+`vite.config.ts` to `"/moral-injury/"` before building. For a root subdomain like
+`morality.cotrackpro.com`, leave `base` as `"/"` (the default — no change needed).
+
+### Production: `morality.cotrackpro.com`
+
+`cotrackpro.com` is already a Vercel-managed domain on the `dougdevitres-projects`
+team, so branding a subdomain is dashboard-only (Vercel auto-provisions the DNS
+record and TLS cert — no registrar changes).
+
+1. **Import the repo** → vercel.com/new → select `dougdevitre/cotrackpro-moral-injury`.
+   Vercel auto-detects Vite; build command `npm run build`, output `dist`. Click
+   **Deploy**. (Pushes to `main` then auto-deploy to production.)
+2. **Attach the subdomain** → Project → Settings → **Domains** → add
+   `morality.cotrackpro.com`. Because the apex is already on the team, it verifies
+   instantly and serves over HTTPS within a minute or two.
+3. **Test in production** → visit https://morality.cotrackpro.com and confirm the
+   SPA loads and deep links resolve (SPA rewrite is handled by `vercel.json`).
 
 ---
 
