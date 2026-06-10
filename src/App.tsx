@@ -13,6 +13,7 @@ import { LongView } from "./components/LongView";
 import { CommitDeclaration } from "./components/CommitDeclaration";
 import { ShareStudio } from "./components/ShareStudio";
 import { Onboarding } from "./components/Onboarding";
+import { EncourageHub } from "./components/EncourageHub";
 import { About } from "./components/About";
 import { Footer } from "./components/Footer";
 import { hasCustomHabit } from "./lib/practice";
@@ -109,6 +110,8 @@ export default function App() {
         {view === "share" && (
           <ShareStudio profile={profile} defaultRoleId={roleId} onToast={onToast} />
         )}
+
+        {view === "encourage" && <EncourageHub onToast={onToast} />}
 
         {view === "about" && <About />}
 

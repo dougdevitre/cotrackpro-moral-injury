@@ -62,6 +62,7 @@ export type View =
   | "longview"
   | "commit"
   | "share"
+  | "encourage"
   | "about";
 
 /* --------------------------- Commitment declaration ----------------------- */
@@ -135,6 +136,13 @@ export interface PracticePlan {
 export interface ScoreProfile {
   scores: Scores;
   roleId: string | null;
+}
+
+/** A privately logged moment of doing the right thing. */
+export interface MoralWin {
+  id: string;
+  text: string;
+  dateISO: string;
 }
 
 /** On-device daily-reflection streak (no personal content, never transmitted). */

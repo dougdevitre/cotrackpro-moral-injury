@@ -63,6 +63,12 @@ export const HOME = {
       cta: "Make your commitment",
     },
     {
+      view: "encourage" as const,
+      title: "Encourage",
+      body: "Log the moments you did the right thing, read how others held the line, and build the moral strength that notices itself.",
+      cta: "Open encouragement",
+    },
+    {
       view: "share" as const,
       title: "Share",
       body: "Generate a clean, on-brand image of your commitment to ethical practice — rendered privately on your device, ready to post.",
@@ -140,6 +146,56 @@ export const LANDING = {
     body: "Money, status, and standing in the community all reward cutting corners. This is a place to practice the other thing — quietly, on your own terms.",
     cta: { label: "Make your commitment", view: "commit" as const },
   },
+};
+
+export const ENCOURAGE = {
+  kicker: "Encourage",
+  title: "The work you do right matters",
+  lede:
+    "Moral strength is built by noticing it. Log the moments you held the line, read how others have, and let it remind you who you are under pressure.",
+  affirmations: [
+    "Doing right quietly, when no one is watching, is the whole game — and you're playing it.",
+    "You can carry hard things and still protect your integrity. You've done it before.",
+    "Small acts of honesty compound into a reputation you can stand on.",
+    "Choosing the harder right over the easier wrong is courage. Name it as such.",
+    "You're allowed to protect a child's wellbeing even when it's inconvenient.",
+    "Your steadiness under pressure is a gift to everyone who depends on this system.",
+    "Integrity rarely gets applause. It still changes lives. Yours does.",
+  ],
+  winsTitle: "Your moral wins",
+  winsLede: "Capture a moment you did the right thing — even a small one. Private to this device.",
+  winsPlaceholder: "e.g. I disclosed the unfavorable fact even though it hurt my case.",
+  winsAdd: "Log this win",
+  winsEmpty: "No wins logged yet. Next time you hold the line, come back and name it.",
+  winsKeep: "Keep my wins on this device",
+  winsKept: "Saved on this device",
+  winsPrint: "Print my wins",
+  winsRemove: "Remove",
+  winsRemoved: "Win removed",
+  winsLogged: "Win logged — that counts.",
+  exemplarsTitle: "How others held the line",
+  exemplars: [
+    {
+      role: "Family law attorney",
+      text: "A client demanded I bury a damaging document. I explained that the duty of candor protects them too — and filed it. We lost a motion; we kept our license and our name.",
+    },
+    {
+      role: "Custody evaluator",
+      text: "I caught myself favoring the parent who was easier to talk to. I went back to the data, re-interviewed, and wrote what the evidence actually showed.",
+    },
+    {
+      role: "Judge",
+      text: "A packed docket tempted me to rubber-stamp an agreed order that didn't sit right. I took the extra ten minutes to question it. A child's schedule changed for the better.",
+    },
+    {
+      role: "Caseworker",
+      text: "I was pressured to close a case to hit a number. I documented why it wasn't safe to close and held it open. Once it was in writing, my supervisor backed me.",
+    },
+    {
+      role: "Mediator",
+      text: "When one party kept steamrolling the other, I paused and reset the ground rules rather than push a fast settlement. The agreement that emerged actually held.",
+    },
+  ],
 };
 
 export const DAILY = {

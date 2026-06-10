@@ -1582,6 +1582,142 @@ html {
   outline-offset: 2px;
 }
 
+/* ---------------------------- Encourage hub ------------------------------ */
+.mi-affirm {
+  font-size: clamp(18px, 3.6vw, 22px);
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--ink);
+  border-left: 3px solid var(--gold);
+  padding: 4px 0 4px 18px;
+  margin: 8px 0 30px;
+}
+.mi-wins {
+  margin-top: 8px;
+}
+.mi-wins-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 12px 0 18px;
+}
+.mi-wins-input {
+  width: 100%;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  resize: vertical;
+  min-height: 64px;
+}
+.mi-wins-input:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 1px;
+}
+.mi-wins-empty {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+.mi-wins-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mi-win {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.mi-win-dot {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 99px;
+  margin-top: 6px;
+  background: #10b981;
+}
+.mi-win-text {
+  flex: 1;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.mi-win-date {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.mi-win-remove {
+  flex-shrink: 0;
+  background: none;
+  border: 0;
+  color: var(--ink-soft);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.mi-win-remove:hover {
+  color: var(--clay);
+}
+.mi-wins-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+.mi-wins-kept {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+.mi-link-btn {
+  background: none;
+  border: 0;
+  color: var(--accent-2);
+  font: inherit;
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  padding: 0;
+}
+.mi-link-btn:hover {
+  color: var(--ink);
+}
+.mi-exemplars {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+.mi-exemplar {
+  margin: 0;
+  padding: 16px 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.mi-exemplar-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.mi-exemplar-role {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-2);
+}
+
 /* --------------------------- Onboarding modal ---------------------------- */
 .mi-overlay {
   position: fixed;
