@@ -1,4 +1,4 @@
-import { validatePledgeInput, type WallPledge } from "../src/lib/pledge";
+import { validatePledgeInput, type WallPledge } from "../src/lib/pledge.js";
 import {
   clientIpHash,
   isConfigured,
@@ -7,7 +7,7 @@ import {
   putPledge,
   randomUUID,
   rateLimit,
-} from "./_lib";
+} from "./_lib.js";
 
 const PAGE = 20;
 // Per-IP budgets within a rolling hour.
