@@ -152,6 +152,10 @@ export const CALCULATOR = {
   rangeNote: "Shown as a range, not a precise figure.",
   assumptionsTitle: "Your assumptions",
   reset: "Reset to suggested values",
+  shareTitle: "Share this result",
+  shareLede: "Render an on-brand image of the dividend, drawn privately on your device.",
+  shareDownload: "Download result image",
+  shareTagline: "An educational estimate",
   source: {
     reflection: "Exposure pre-filled from your completed reflection.",
     climate: "Reduction pre-filled from your leaders' climate check.",

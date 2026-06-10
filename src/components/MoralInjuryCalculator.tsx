@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ScoreProfile } from "../types";
-import { CALCULATOR } from "../content/copy";
+import { CALCULATOR, SHARE } from "../content/copy";
+import { roleById } from "../data/roles";
+import { downloadCanvasPng, renderPoster, type PosterFormat } from "../lib/share/poster";
 import {
   clampPct,
   compute,
@@ -51,6 +53,30 @@ export function MoralInjuryCalculator({
   }, [inputs]);
 
   const result = useMemo(() => compute(inputs), [inputs]);
+
+  // --- Share the result as an on-brand image (drawn on-device) ---
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [shareFormat, setShareFormat] = useState<PosterFormat>("square");
+  const shareRole = roleById(profile?.roleId)?.label ?? "Family-law practice";
+  const shareMessage = `The estimated dividend of reducing moral injury: ${money(result.dividend)} a year.`;
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    renderPoster(canvas, {
+      message: shareMessage,
+      roleLabel: shareRole,
+      format: shareFormat,
+      tagline: C.shareTagline,
+    });
+  }, [shareMessage, shareRole, shareFormat, C.shareTagline]);
+
+  async function downloadShare() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ok = await downloadCanvasPng(canvas, `cotrackpro-moral-injury-dividend-${shareFormat}.png`);
+    if (ok) onToast("Image downloaded to this device");
+  }
 
   function setNum(key: keyof CalcInputs, value: string) {
     const n = value === "" ? 0 : Number(value);
@@ -217,6 +243,44 @@ export function MoralInjuryCalculator({
             <li key={a}>{a}</li>
           ))}
         </ul>
+      </section>
+
+      {/* Share */}
+      <section className="mi-section">
+        <h2 className="mi-h2">{C.shareTitle}</h2>
+        <p className="mi-section-lede">{C.shareLede}</p>
+        <div className="mi-share-grid">
+          <div className="mi-share-controls">
+            <div className="mi-field">
+              <span className="mi-field-label">{SHARE.formatLabel}</span>
+              <div className="mi-format-row">
+                {SHARE.formats.map((f) => (
+                  <button
+                    key={f.id}
+                    type="button"
+                    className={"mi-format-btn" + (f.id === shareFormat ? " active" : "")}
+                    aria-pressed={f.id === shareFormat}
+                    onClick={() => setShareFormat(f.id)}
+                  >
+                    <span className="mi-format-name">{f.label}</span>
+                    <span className="mi-format-hint">{f.hint}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <button type="button" className="mi-btn" onClick={downloadShare}>
+              {C.shareDownload} ↓
+            </button>
+          </div>
+          <div className="mi-share-preview">
+            <canvas
+              ref={canvasRef}
+              className={"mi-share-canvas " + shareFormat}
+              role="img"
+              aria-label={shareMessage}
+            />
+          </div>
+        </div>
       </section>
 
       <p className="mi-calc-disclaimer">{C.disclaimer}</p>

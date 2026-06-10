@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import type { View } from "../types";
 import { Icon } from "./icons";
 
@@ -17,6 +18,19 @@ const TABS: { view: View; label: string }[] = [
 ];
 
 export function Nav({ view, onNavigate }: { view: View; onNavigate: (v: View) => void }) {
+  const activeRef = useRef<HTMLButtonElement>(null);
+
+  // Keep the current tab visible in the horizontally-scrolling strip (with 12
+  // tabs the active one can otherwise sit off-screen). Horizontal only.
+  useEffect(() => {
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    activeRef.current?.scrollIntoView({
+      inline: "center",
+      block: "nearest",
+      behavior: reduce ? "auto" : "smooth",
+    });
+  }, [view]);
+
   return (
     <header className="mi-nav">
       <div className="mi-nav-inner">
@@ -33,6 +47,7 @@ export function Nav({ view, onNavigate }: { view: View; onNavigate: (v: View) =>
           {TABS.map((t) => (
             <button
               key={t.view}
+              ref={view === t.view ? activeRef : undefined}
               className={"mi-tab" + (view === t.view ? " active" : "")}
               aria-current={view === t.view ? "page" : undefined}
               onClick={() => onNavigate(t.view)}
