@@ -40,7 +40,7 @@ body,
 .mi-wrap {
   max-width: 760px;
   margin: 0 auto;
-  padding: 48px 24px 80px;
+  padding: clamp(28px, 6vw, 48px) clamp(16px, 4vw, 24px) 80px;
 }
 .mi-kicker {
   font-size: 12px;
@@ -79,7 +79,7 @@ body,
 .mi-card {
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 26px 28px;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.05) inset,
@@ -100,7 +100,7 @@ body,
   background: var(--accent);
   color: #04121f;
   border: 1px solid var(--accent);
-  border-radius: 3px;
+  border-radius: 9px;
   padding: 13px 26px;
   transition:
     transform 0.15s ease,
@@ -151,7 +151,7 @@ body,
   cursor: pointer;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 14px 16px;
   transition:
     border-color 0.18s,
@@ -218,7 +218,7 @@ body,
   cursor: pointer;
   background: var(--paper);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 12px 8px;
   text-align: center;
   color: var(--ink-soft);
@@ -343,7 +343,7 @@ body,
 .mi-crisis {
   background: rgba(245, 158, 11, 0.12);
   border: 1px solid rgba(245, 158, 11, 0.4);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 16px 18px;
   margin: 24px 0;
 }
@@ -368,7 +368,7 @@ body,
 .mi-disc {
   background: var(--paper-2);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 16px 18px;
   font-size: 13px;
   color: var(--ink-soft);
@@ -384,7 +384,7 @@ body,
   color: var(--ink);
   border: 1px solid var(--line);
   padding: 10px 18px;
-  border-radius: 4px;
+  border-radius: 10px;
   font-size: 14px;
   box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.5);
 }
@@ -435,14 +435,22 @@ body,
 
 /* ----------------------------- Navigation -------------------------------- */
 .mi-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(10, 15, 30, 0.82);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  border-bottom: 1px solid var(--line);
+}
+.mi-nav-inner {
   max-width: 760px;
   margin: 0 auto;
-  padding: 22px 24px 0;
+  padding: 12px clamp(16px, 4vw, 24px);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 14px;
 }
 .mi-brand {
   display: inline-flex;
@@ -452,6 +460,7 @@ body,
   border: 0;
   cursor: pointer;
   padding: 0;
+  flex-shrink: 0;
 }
 .mi-logo {
   display: block;
@@ -473,17 +482,33 @@ body,
 .mi-tabs {
   display: flex;
   gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  margin: -4px 0;
+  padding: 4px 0;
+}
+.mi-tabs::-webkit-scrollbar {
+  display: none;
 }
 .mi-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
   font-family: "Geist Sans", system-ui, sans-serif;
   font-size: 14px;
   color: var(--ink-soft);
   background: none;
   border: 0;
   border-radius: 99px;
-  padding: 6px 14px;
+  padding: 8px 14px;
+  min-height: 40px;
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
+}
+.mi-tab svg {
+  opacity: 0.8;
 }
 .mi-tab:hover {
   color: var(--ink);
@@ -493,44 +518,82 @@ body,
   color: #04121f;
   background: var(--accent);
 }
+.mi-tab.active svg {
+  opacity: 1;
+}
+@media (max-width: 640px) {
+  .mi-nav-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+  .mi-tabs {
+    gap: 2px;
+    mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+  }
+}
 
 /* ------------------------------- Home ------------------------------------ */
 .mi-home-grid {
   display: grid;
-  gap: 14px;
-  margin-top: 8px;
+  gap: 12px;
+  margin-top: 14px;
+}
+@media (min-width: 620px) {
+  .mi-home-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 .mi-home-card {
   text-align: left;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 4px;
-  padding: 22px 24px;
+  border-radius: 14px;
+  padding: 20px 22px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  transition: border-color 0.18s, transform 0.12s, box-shadow 0.18s;
+  gap: 7px;
+  transition: border-color 0.18s, transform 0.12s, box-shadow 0.18s, background 0.18s;
 }
 .mi-home-card:hover {
   border-color: var(--accent-2);
   transform: translateY(-2px);
   box-shadow: 0 16px 36px -30px rgba(0, 0, 0, 0.7);
 }
+.mi-home-card:active {
+  transform: translateY(0);
+}
+.mi-home-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  color: var(--accent-2);
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  margin-bottom: 4px;
+}
 .mi-home-step {
   font-family: "Geist Sans", system-ui, sans-serif;
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   color: var(--ink);
 }
 .mi-home-body {
-  font-size: 15px;
+  font-size: 14.5px;
   color: var(--ink-soft);
+  flex: 1;
 }
 .mi-home-cta {
   font-size: 14px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent-2);
 }
 
 /* ------------------------------ Guides ----------------------------------- */
@@ -543,7 +606,7 @@ body,
   text-align: left;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 18px 20px;
   cursor: pointer;
   display: flex;
@@ -584,7 +647,7 @@ body,
   color: var(--ink);
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 11px 13px;
   resize: vertical;
 }
@@ -622,7 +685,7 @@ body,
   gap: 14px;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 14px 16px;
   transition: border-color 0.15s;
 }
@@ -809,7 +872,7 @@ body,
   color: inherit;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 14px 16px;
   transition: border-color 0.15s, transform 0.12s;
 }
@@ -825,7 +888,7 @@ body,
   color: var(--accent);
   background: rgba(56, 189, 248, 0.12);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 4px 9px;
   min-width: 44px;
   text-align: center;
@@ -860,7 +923,7 @@ body,
 .mi-lv-item {
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   overflow: hidden;
   transition: border-color 0.15s;
 }
@@ -907,7 +970,7 @@ body,
   display: grid;
   gap: 4px;
   padding: 14px 16px;
-  border-radius: 4px;
+  border-radius: 10px;
   background: rgba(56, 189, 248, 0.1);
   border: 1px solid rgba(56, 189, 248, 0.3);
 }
@@ -947,7 +1010,7 @@ body,
   color: inherit;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 13px 16px;
   transition: border-color 0.15s;
 }
@@ -998,7 +1061,7 @@ body,
   background: var(--card);
   border: 1px solid var(--line);
   border-left: 3px solid var(--accent);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 14px 18px;
 }
 .mi-about-h {
@@ -1076,7 +1139,7 @@ body,
   gap: 12px;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 12px 14px;
 }
 .mi-q-block {
@@ -1095,7 +1158,7 @@ body,
   cursor: pointer;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 11px 14px;
   color: var(--ink);
   transition: border-color 0.15s, background 0.15s;
@@ -1126,4 +1189,33 @@ body,
 }
 .mi-q-exp.wrong {
   color: var(--clay);
+}
+
+/* --------------------------- Mobile ergonomics --------------------------- */
+html {
+  scroll-padding-top: 84px; /* clear the sticky nav for in-page anchors */
+}
+@media (max-width: 560px) {
+  .mi-h1 {
+    font-size: clamp(26px, 8vw, 34px);
+  }
+  /* Comfortable touch targets on small screens. */
+  .mi-btn,
+  .mi-input,
+  .mi-textarea {
+    min-height: 44px;
+  }
+  .mi-chip {
+    min-height: 38px;
+  }
+  /* Keep the CLE credit table readable without breaking the page width. */
+  .mi-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Action rows wrap cleanly instead of overflowing. */
+  .mi-navrow .mi-btn {
+    flex: 1 1 auto;
+  }
 }
