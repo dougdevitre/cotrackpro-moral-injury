@@ -93,7 +93,106 @@ export const HOME = {
       body: "Supervisors, judges, and directors: read your team's ethical climate and build an environment where doing right is the easy path.",
       cta: "Build a moral environment",
     },
+    {
+      view: "calculator" as const,
+      title: "Cost & dividend calculator",
+      body: "Put a conservative number on what unaddressed moral injury costs — and the dividend from reducing it. Pre-fills from your reflection and climate check.",
+      cta: "Open the calculator",
+    },
+    {
+      view: "wall" as const,
+      title: "The pledge wall",
+      body: "Optional and public: stand behind one protective commitment alongside others across the family-law system. Your reflection always stays private.",
+      cta: "Visit the pledge wall",
+    },
   ],
+};
+
+export const CALCULATOR = {
+  kicker: "CoTrackPro · Practitioner Wellbeing",
+  title: "Moral-injury cost & dividend",
+  lede:
+    "A transparent, conservative estimate of what unaddressed moral injury costs each year — and the dividend you'd recover by reducing it. Every assumption is on the surface and yours to change.",
+  modeLabel: "What are you estimating?",
+  modes: {
+    caseload: { label: "My caseload", help: "One practitioner's cases per year." },
+    jurisdiction: {
+      label: "A team or jurisdiction",
+      help: "Practitioners or staff across an office, court, or region.",
+    },
+  },
+  fields: {
+    scaleCaseload: { label: "Cases per year", help: "Roughly how many cases you carry annually." },
+    scaleJurisdiction: {
+      label: "Practitioners / staff",
+      help: "How many people the estimate covers.",
+    },
+    exposure: {
+      label: "Baseline moral-injury exposure",
+      help: "0–100. Pre-filled from your reflection's exposure score when available.",
+    },
+    costFactor: {
+      label: "Annual cost per unit ($)",
+      help: "Cost attributable to moral injury — turnover, sick days, errors, lost effectiveness.",
+    },
+    reduction: {
+      label: "Achievable protective reduction",
+      help: "0–100. Pre-filled from your climate check — a weaker climate means more room to recover.",
+    },
+    fraction: {
+      label: "Conservative fraction (floor)",
+      help: "A deliberately low multiplier so the figure under-claims rather than over-claims.",
+    },
+  },
+  costTitle: "Estimated annual cost",
+  costSub: "of unaddressed moral injury, before acting",
+  dividendTitle: "Protective dividend",
+  dividendSub: "recovered by the reduction above",
+  residualTitle: "Residual cost after acting",
+  rangeNote: "Shown as a range, not a precise figure.",
+  assumptionsTitle: "Your assumptions",
+  reset: "Reset to suggested values",
+  source: {
+    reflection: "Exposure pre-filled from your completed reflection.",
+    climate: "Reduction pre-filled from your leaders' climate check.",
+    none: "Estimate — complete a reflection or climate check to personalize these.",
+  },
+  disclaimer:
+    "An educational planning estimate, not an accounting figure, a clinical measure, or legal or financial advice. The coefficients are illustrative defaults you should replace with your own. Nothing here is transmitted or stored off your device unless you opt into on-device saving.",
+};
+
+export const WALL = {
+  kicker: "CoTrackPro · Community",
+  title: "The pledge wall",
+  lede:
+    "A shared, public space where professionals across the family-law system stand behind one protective commitment. Adding yours is entirely optional.",
+  privacy:
+    "This is the one part of CoTrackPro that leaves your device. Your reflection, scores, and notes always stay private and local — the wall only ever receives the commitment you choose, an optional first name, your role, and a broad region. Nothing else.",
+  consentLabel:
+    "I understand this pledge will be posted publicly, and I'm choosing a first name and region I'm comfortable sharing.",
+  form: {
+    title: "Add your pledge",
+    commitment: "Choose the commitment you'll stand behind",
+    name: "First name (optional)",
+    namePlaceholder: "e.g. Sam",
+    role: "Your role",
+    rolePlaceholder: "Select a role",
+    region: "Region",
+    submit: "Post my pledge",
+    submitting: "Posting…",
+    success: "Your pledge is on the wall — thank you.",
+  },
+  wallTitle: "Pledges from the community",
+  empty: "No pledges yet. Be the first to stand behind a commitment.",
+  anonymous: "Someone",
+  report: "Report",
+  reported: "Reported — thank you",
+  loadMore: "Show more",
+  countSuffix: "professionals have pledged",
+  notConfigured:
+    "The community wall isn't switched on yet. Everything else in CoTrackPro works fully on your device — check back soon to add your public pledge.",
+  disclaimer:
+    "Pledges are moderated and may be removed. This is a voluntary statement of intent, not a professional record, a credential, or legal advice.",
 };
 
 export const LANDING = {
@@ -478,6 +577,7 @@ export const COMMIT = {
     "I am making these commitments to myself, freely. I understand this is a personal pledge — not a credential, clinical assessment, or legal advice.",
   generate: "Generate my certificate",
   poster: "Make a shareable poster",
+  toWall: "Add a pledge to the wall",
   needName: "Add your name and affirm at least one commitment to generate your certificate.",
   generated: "Opening your certificate — choose “Save as PDF” in the print dialog.",
   posterDone: "Opening your poster — choose “Save as PDF” in the print dialog.",

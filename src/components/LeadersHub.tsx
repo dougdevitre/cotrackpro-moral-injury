@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { LEADERS } from "../content/copy";
 import { CLIMATE_DIMS, dimLabel, scoreClimate, type ClimateBandKey } from "../lib/climate";
 import { todayISO } from "../lib/streak";
+import { saveClimateSignal } from "../lib/storage";
 import { openPrintable } from "../lib/print/layout";
 import { buildLeaderPledgeHtml, buildMoralDebriefHtml } from "../lib/print/documents";
 
@@ -22,6 +23,14 @@ export function LeadersHub({ onToast }: { onToast: (msg: string) => void }) {
     () => (allAnswered ? scoreClimate(C.items, answers) : null),
     [allAnswered, answers, C.items]
   );
+
+  // Leave behind a non-personal climate signal (aggregate score only) so the
+  // calculator can suggest an achievable protective reduction. No item answers.
+  useEffect(() => {
+    if (result) {
+      saveClimateSignal({ overall: result.overall, lowest: result.lowest, dateISO: todayISO() });
+    }
+  }, [result]);
 
   function printPledge() {
     const pledges = LEADERS.pledge.filter((_, i) => checked[i]);

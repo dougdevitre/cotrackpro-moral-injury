@@ -64,6 +64,8 @@ export type View =
   | "share"
   | "encourage"
   | "leaders"
+  | "calculator"
+  | "wall"
   | "about";
 
 /* --------------------------- Commitment declaration ----------------------- */

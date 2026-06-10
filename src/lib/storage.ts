@@ -1,4 +1,14 @@
 import type { MoralWin, PracticePlan, StreakState } from "../types";
+import type { ClimateDim } from "./climate";
+import type { CalcInputs, CalcMode } from "./costDividend";
+
+/** Non-personal aggregate left behind by a completed leaders' climate check. */
+export interface ClimateSignal {
+  /** 0–100 overall climate score (no item-level answers, no names). */
+  overall: number;
+  lowest: ClimateDim;
+  dateISO: string;
+}
 
 /**
  * Opt-in, ON-DEVICE-ONLY persistence for the practice plan.
@@ -11,6 +21,8 @@ const CONSENT_KEY = "cotrackpro.mi.persist";
 const WELCOME_KEY = "cotrackpro.mi.welcomed";
 const STREAK_KEY = "cotrackpro.mi.streak";
 const WINS_KEY = "cotrackpro.mi.wins";
+const CLIMATE_KEY = "cotrackpro.mi.climate";
+const CALC_KEY = "cotrackpro.mi.calculator";
 
 export function storageAvailable(): boolean {
   try {
@@ -79,6 +91,8 @@ export function clear(): void {
     window.localStorage.removeItem(WELCOME_KEY);
     window.localStorage.removeItem(STREAK_KEY);
     window.localStorage.removeItem(WINS_KEY);
+    window.localStorage.removeItem(CLIMATE_KEY);
+    window.localStorage.removeItem(CALC_KEY);
   } catch {
     /* no-op */
   }
@@ -163,6 +177,75 @@ export function hasWelcomed(): boolean {
 export function markWelcomed(): void {
   try {
     window.localStorage.setItem(WELCOME_KEY, "1");
+  } catch {
+    /* no-op */
+  }
+}
+
+/**
+ * Last completed climate-check signal. Holds only the aggregate 0–100 score and
+ * a date (no item answers, no names) so the calculator can suggest an achievable
+ * protective reduction. Like the streak, it is on-device only and cleared by
+ * `clear()`.
+ */
+export function loadClimateSignal(): ClimateSignal | null {
+  try {
+    const raw = window.localStorage.getItem(CLIMATE_KEY);
+    if (!raw) return null;
+    const p = JSON.parse(raw) as ClimateSignal;
+    if (
+      typeof p.overall === "number" &&
+      typeof p.lowest === "string" &&
+      typeof p.dateISO === "string"
+    ) {
+      return p;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveClimateSignal(signal: ClimateSignal): void {
+  try {
+    window.localStorage.setItem(CLIMATE_KEY, JSON.stringify(signal));
+  } catch {
+    /* no-op */
+  }
+}
+
+/**
+ * Calculator inputs — these are user settings (caseload, cost factors), so they
+ * follow the same opt-in rule as the practice plan: only persisted once the user
+ * has consented to on-device storage, and removed by `clear()`.
+ */
+export function loadCalc(): CalcInputs | null {
+  try {
+    if (!hasConsent()) return null;
+    const raw = window.localStorage.getItem(CALC_KEY);
+    if (!raw) return null;
+    const p = JSON.parse(raw) as CalcInputs;
+    const modes: CalcMode[] = ["caseload", "jurisdiction"];
+    if (
+      modes.includes(p.mode) &&
+      typeof p.scale === "number" &&
+      typeof p.exposurePct === "number" &&
+      typeof p.costFactor === "number" &&
+      typeof p.reductionPct === "number" &&
+      typeof p.conservativeFraction === "number"
+    ) {
+      return p;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveCalc(inputs: CalcInputs): void {
+  try {
+    if (!hasConsent()) return;
+    window.localStorage.setItem(CALC_KEY, JSON.stringify(inputs));
   } catch {
     /* no-op */
   }
