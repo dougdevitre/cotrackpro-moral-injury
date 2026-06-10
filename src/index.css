@@ -3,6 +3,11 @@
 * {
   box-sizing: border-box;
 }
+/* Interactive elements default to UA text color (black); inherit the theme ink
+   so headings inside card buttons stay legible on the dark surface. */
+button {
+  color: inherit;
+}
 html,
 body,
 #root {
@@ -13,11 +18,11 @@ body,
 .mi-root {
   /* CoTrackPro brand: sky-blue on deep navy, Geist sans-serif. */
   --paper: #0a0f1e;
-  --paper-2: #16233b;
-  --card: #0f1a2e;
-  --ink: #e8eef7;
-  --ink-soft: #93a4bd;
-  --line: rgba(148, 163, 184, 0.18);
+  --paper-2: #1b2a45;
+  --card: #15233c;
+  --ink: #eef3fa;
+  --ink-soft: #a6b6cf;
+  --line: rgba(148, 163, 184, 0.26);
   --accent: #0ea5e9;
   --accent-2: #38bdf8;
   --clay: #f59e0b;
@@ -661,6 +666,83 @@ body,
 .mi-chip.on {
   background: var(--accent);
   color: #04121f;
+}
+
+/* ----------------------- Commitment declaration -------------------------- */
+.mi-commit-list {
+  display: grid;
+  gap: 10px;
+  margin: 10px 0 6px;
+}
+.mi-commit {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  text-align: left;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition:
+    border-color 0.16s,
+    background 0.16s,
+    transform 0.12s;
+}
+.mi-commit:hover {
+  border-color: var(--accent-2);
+  transform: translateY(-1px);
+}
+.mi-commit.on {
+  border-color: var(--accent);
+  background: rgba(56, 189, 248, 0.08);
+}
+.mi-commit-check {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  border: 1.5px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #04121f;
+  background: transparent;
+  transition: background 0.16s, border-color 0.16s;
+}
+.mi-commit.on .mi-commit-check.tier-support {
+  background: #0ea5e9;
+  border-color: #0ea5e9;
+}
+.mi-commit.on .mi-commit-check.tier-ethics {
+  background: #6366f1;
+  border-color: #6366f1;
+}
+.mi-commit.on .mi-commit-check.tier-repair {
+  background: #10b981;
+  border-color: #10b981;
+}
+.mi-commit.on .mi-commit-check.tier-systems {
+  background: #f59e0b;
+  border-color: #f59e0b;
+}
+.mi-commit-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.mi-commit-label {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+.mi-commit-text {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.45;
 }
 
 /* --------------------------- Plan summary -------------------------------- */
