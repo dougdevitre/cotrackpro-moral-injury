@@ -1,4 +1,5 @@
 import type { Subscale } from "../types";
+import type { ClimateItem } from "../lib/climate";
 
 export const SUB_META: Record<Subscale, { label: string; note: string }> = {
   SELF: { label: "Self-transgression", note: "Acts you took that went against your values." },
@@ -86,6 +87,12 @@ export const HOME = {
       body: "See how a single action or inaction can ripple across a child's life — and where your leverage to protect them sits.",
       cta: "See the long view",
     },
+    {
+      view: "leaders" as const,
+      title: "For leaders",
+      body: "Supervisors, judges, and directors: read your team's ethical climate and build an environment where doing right is the easy path.",
+      cta: "Build a moral environment",
+    },
   ],
 };
 
@@ -145,6 +152,129 @@ export const LANDING = {
     title: "Integrity is what you do when it costs you something.",
     body: "Money, status, and standing in the community all reward cutting corners. This is a place to practice the other thing — quietly, on your own terms.",
     cta: { label: "Make your commitment", view: "commit" as const },
+  },
+};
+
+const LEADERS_CLIMATE_ITEMS: ClimateItem[] = [
+  { id: "s1", dim: "safe", text: "People can raise an ethical concern here without fear of retaliation." },
+  { id: "s2", dim: "safe", text: "Dissent — “this doesn't feel right” — is treated as valuable, not disloyal." },
+  { id: "s3", dim: "safe", text: "When something goes wrong, we respond with learning rather than blame." },
+  { id: "l1", dim: "load", text: "Caseloads and deadlines are humane enough to do careful, ethical work." },
+  { id: "l2", dim: "load", text: "People have the time and resources to do right, not only to do fast." },
+  { id: "l3", dim: "load", text: "When someone is stretched past their limit, we notice and adjust." },
+  { id: "b1", dim: "backed", text: "When someone does the right thing at a personal cost, we back them." },
+  { id: "b2", dim: "backed", text: "We recognize integrity, not just outcomes and numbers." },
+  { id: "b3", dim: "backed", text: "People know where to take a moral concern and trust it will be heard." },
+];
+
+export const LEADERS = {
+  kicker: "For leaders",
+  title: "Build a moral environment",
+  lede:
+    "Moral injury is usually a systems problem, not a character problem. As a supervisor, judge, managing partner, or director, you shape the conditions that make doing right easy or costly. Here's how to read your team's climate and improve it.",
+  climate: {
+    title: "Ethical-climate check",
+    lede:
+      "A quick, private read on your team's moral environment — not a performance review. Rate how true each statement is right now.",
+    scale: ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],
+    items: LEADERS_CLIMATE_ITEMS,
+    resultTitle: "Your team's climate",
+    retake: "Retake the check",
+    bandRead: {
+      strong:
+        "Your team has real protective strength. Keep naming it out loud — climates like this are maintained, not finished.",
+      mixed:
+        "There's a foundation here, with clear gaps. Pick the lowest area below and make one concrete change this month.",
+      "at-risk":
+        "This is the soil moral injury grows in. That's a signal, not a verdict on you — start with the lowest area below, and you don't have to fix it alone.",
+    },
+    dimMove: {
+      safe: "Make it safe to speak: explicitly invite dissent at your next team meeting, and visibly thank the first person who uses it.",
+      load: "Fix the drivers: name one unsustainable load this week and remove or redistribute it — don't ask people to absorb it quietly.",
+      backed:
+        "Back integrity: the next time someone does right at a cost, say so publicly and make sure the organization stands behind them.",
+    },
+  },
+  playbookTitle: "The leader's playbook",
+  playbook: [
+    {
+      id: "model",
+      title: "Model it in the open",
+      practices: [
+        "Say out loud when you choose the harder right — including when it costs you.",
+        "Admit your own mistakes first; it sets the price of honesty low for everyone.",
+        "Tie decisions to values, not just rules or optics.",
+      ],
+    },
+    {
+      id: "safe",
+      title: "Make it safe to speak",
+      practices: [
+        "Invite dissent by name; treat “this feels wrong” as a contribution.",
+        "Separate blame from learning when something goes wrong (just culture).",
+        "Protect the messenger — never let raising a concern cost someone.",
+      ],
+    },
+    {
+      id: "debrief",
+      title: "Debrief the hard ones",
+      practices: [
+        "Run a short moral debrief after morally hard cases, not just busy ones.",
+        "Ask what felt forced against people's values, and what was outside their control.",
+        "Close with one concrete change — and follow up on it.",
+      ],
+    },
+    {
+      id: "drivers",
+      title: "Fix the drivers",
+      practices: [
+        "Treat impossible load as a system problem, not a personal failing.",
+        "Guard time and resources for careful work; resist “just do it faster.”",
+        "Watch for the signs — cynicism, withdrawal, turnover — and act early.",
+      ],
+    },
+    {
+      id: "reward",
+      title: "Reward integrity, not just outcomes",
+      practices: [
+        "Recognize the quiet right calls, not only wins and numbers.",
+        "Make escalation paths clear, and act on what comes up.",
+        "Back people publicly when they do right at a cost.",
+      ],
+    },
+  ],
+  pledgeTitle: "A leader's pledge",
+  pledgeLede: "Six commitments to the people whose moral environment you shape.",
+  pledgeNameLabel: "Your name (optional)",
+  pledgePrint: "Print my leader's pledge",
+  pledge: [
+    "I will protect people who raise concerns or do right at a cost.",
+    "I will treat dissent as data, not disloyalty.",
+    "I will run debriefs after morally hard cases, not only busy ones.",
+    "I will name and adjust unsustainable load instead of normalizing it.",
+    "I will recognize integrity, not only outcomes and numbers.",
+    "I will keep escalation paths clear and act on what I hear.",
+  ],
+  toolkitsTitle: "Printable toolkit",
+  debriefPrint: "Print the moral-debrief guide",
+  debrief: {
+    when:
+      "Run a moral debrief after any case that left people feeling they had to act against their values, witnessed harm they couldn't prevent, or were let down by the system.",
+    groundRules: [
+      "No blame — this is about the situation and its constraints, not a person's competence.",
+      "Confidential; what's said here stays here.",
+      "Describe behavior and constraints, not character.",
+      "It's okay to say “I don't know” or “this still sits wrong with me.”",
+    ],
+    prompts: [
+      "What about this case felt morally hard?",
+      "Where did we feel forced to act against our values?",
+      "What was within our control — and what wasn't?",
+      "What did we do right, even under pressure?",
+      "What's one thing we'll change, and who owns it?",
+    ],
+    close:
+      "Name what was outside anyone's control, acknowledge the weight people are carrying, and end with the one change you're committing to.",
   },
 };
 

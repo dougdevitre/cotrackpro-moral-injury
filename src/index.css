@@ -1582,6 +1582,200 @@ html {
   outline-offset: 2px;
 }
 
+/* ----------------------------- Leaders hub ------------------------------- */
+.mi-climate-items {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  counter-reset: ci;
+}
+.mi-climate-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.mi-climate-text {
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.mi-scale {
+  display: flex;
+  gap: 6px;
+}
+.mi-scale-btn {
+  flex: 1 1 0;
+  max-width: 52px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 9px 0;
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s, color 0.12s;
+}
+.mi-scale-btn:hover {
+  border-color: var(--accent-2);
+}
+.mi-scale-btn.active {
+  color: #04121f;
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+}
+.mi-scale-legend {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin: 10px 0 0;
+}
+.mi-climate-result {
+  margin-top: 22px;
+  padding: 20px 22px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  border-left-width: 4px;
+  background: var(--card);
+}
+.mi-climate-result.strong {
+  border-left-color: #10b981;
+}
+.mi-climate-result.mixed {
+  border-left-color: var(--gold);
+}
+.mi-climate-result.atrisk {
+  border-left-color: var(--clay);
+}
+.mi-climate-result-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.mi-climate-result-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.mi-climate-band {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.mi-climate-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.mi-climate-bar-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13.5px;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+.mi-climate-pct {
+  color: var(--ink-soft);
+}
+.mi-climate-track {
+  height: 9px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.mi-climate-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+.mi-climate-read {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 16px 0 10px;
+}
+.mi-climate-move {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+.mi-climate-move strong {
+  color: var(--ink);
+}
+.mi-playbook {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+@media (min-width: 620px) {
+  .mi-playbook {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.mi-play {
+  padding: 16px 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.mi-play-title {
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.mi-play-list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mi-play-list li {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.mi-pledge-list {
+  list-style: none;
+  margin: 14px 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mi-pledge-item label {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  padding: 9px 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  cursor: pointer;
+}
+.mi-pledge-item input {
+  margin-top: 3px;
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.mi-pledge-name {
+  max-width: 320px;
+  margin-bottom: 16px;
+}
+
 /* ---------------------------- Encourage hub ------------------------------ */
 .mi-affirm {
   font-size: clamp(18px, 3.6vw, 22px);
