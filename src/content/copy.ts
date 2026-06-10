@@ -135,8 +135,10 @@ export const COMMIT = {
   attest:
     "I am making these commitments to myself, freely. I understand this is a personal pledge — not a credential, clinical assessment, or legal advice.",
   generate: "Generate my certificate",
+  poster: "Make a shareable poster",
   needName: "Add your name and affirm at least one commitment to generate your certificate.",
-  downloaded: "Certificate downloaded — open it and print or save as PDF.",
+  generated: "Opening your certificate — choose “Save as PDF” in the print dialog.",
+  posterDone: "Opening your poster — choose “Save as PDF” in the print dialog.",
   disclaimer:
     "This declaration is a private, on-device tool for your own wellbeing and ethical practice. It is non-diagnostic and informational only, and confers no professional standing.",
 };

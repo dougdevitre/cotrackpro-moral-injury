@@ -9,6 +9,9 @@ import {
   planIntentions,
   suggestHabits,
 } from "../lib/practice";
+import { download } from "../lib/download";
+import { buildPracticePlanHtml } from "../lib/print/documents";
+import { openPrintable } from "../lib/print/layout";
 
 interface Props {
   profile: ScoreProfile | null;
@@ -17,18 +20,6 @@ interface Props {
   persist: boolean;
   setPersist: (on: boolean) => void;
   onToast: (msg: string) => void;
-}
-
-function download(filename: string, content: string, mime: string) {
-  const blob = new Blob([content], { type: mime });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
 }
 
 export function PracticeHub({ profile, plan, setPlan, persist, setPersist, onToast }: Props) {
@@ -69,6 +60,23 @@ export function PracticeHub({ profile, plan, setPlan, persist, setPersist, onToa
   }
   function removeCommitment(i: number) {
     setPlan((p) => ({ ...p, commitments: p.commitments.filter((_, idx) => idx !== i) }));
+  }
+
+  function savePdf() {
+    const habits: { cue: string; then: string; why?: string }[] = [];
+    plan.habitIds.forEach((id) => {
+      const h = HABITS.find((x) => x.id === id);
+      if (h) habits.push({ cue: h.cue, then: h.then, why: h.why });
+    });
+    plan.customHabits.forEach((c) => habits.push({ cue: c.cue, then: c.then }));
+    openPrintable(
+      buildPracticePlanHtml({
+        dateISO: new Date().toISOString(),
+        commitments: plan.commitments,
+        habits,
+      }),
+      "ethics-practice-plan.html"
+    );
   }
 
   async function copyPlan() {
@@ -232,7 +240,10 @@ export function PracticeHub({ profile, plan, setPlan, persist, setPersist, onToa
       {/* Export + persistence */}
       {!empty && (
         <div className="mi-navrow" style={{ justifyContent: "flex-start", flexWrap: "wrap", gap: 10 }}>
-          <button className="mi-btn" onClick={copyPlan}>
+          <button className="mi-btn" onClick={savePdf}>
+            Save as PDF
+          </button>
+          <button className="mi-btn ghost" onClick={copyPlan}>
             Copy
           </button>
           <button

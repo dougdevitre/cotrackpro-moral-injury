@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { COMMIT } from "../content/copy";
 import { COMMITMENTS } from "../data/commitments";
-import { buildCommitmentCertificateHtml } from "../lib/certificate";
-import { download } from "../lib/download";
+import { buildCommitmentCertificateHtml, buildPosterHtml } from "../lib/print/documents";
+import { openPrintable } from "../lib/print/layout";
 import type { CommitmentCertificateData } from "../types";
 
 function makeDeclarationId(): string {
@@ -28,6 +28,8 @@ export function CommitDeclaration({ onToast }: { onToast: (msg: string) => void 
     setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
   }
 
+  const posterReady = personal.trim().length > 0 || affirmed.length > 0;
+
   function generate() {
     if (!ready) return;
     const data: CommitmentCertificateData = {
@@ -37,12 +39,18 @@ export function CommitDeclaration({ onToast }: { onToast: (msg: string) => void 
       personal: personal.trim() || undefined,
       declarationId: makeDeclarationId(),
     };
-    download(
-      `commitment-${data.declarationId}.html`,
-      buildCommitmentCertificateHtml(data),
-      "text/html"
+    openPrintable(buildCommitmentCertificateHtml(data), `commitment-${data.declarationId}.html`);
+    onToast(COMMIT.generated);
+  }
+
+  function makePoster() {
+    const quote = personal.trim() || affirmed[0]?.text;
+    if (!quote) return;
+    openPrintable(
+      buildPosterHtml({ quote, attribution: name.trim() || undefined }),
+      "commitment-poster.html"
     );
-    onToast(COMMIT.downloaded);
+    onToast(COMMIT.posterDone);
   }
 
   return (
@@ -109,9 +117,14 @@ export function CommitDeclaration({ onToast }: { onToast: (msg: string) => void 
         </label>
 
         <hr className="mi-rule" />
-        <button className="mi-btn" disabled={!ready} onClick={generate}>
-          {COMMIT.generate}
-        </button>
+        <div className="mi-navrow" style={{ justifyContent: "flex-start", flexWrap: "wrap", gap: 10 }}>
+          <button className="mi-btn" disabled={!ready} onClick={generate}>
+            {COMMIT.generate}
+          </button>
+          <button className="mi-btn ghost" disabled={!posterReady} onClick={makePoster}>
+            {COMMIT.poster}
+          </button>
+        </div>
         {!ready && <p className="mi-hint">{COMMIT.needName}</p>}
       </div>
 
