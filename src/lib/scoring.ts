@@ -40,4 +40,5 @@ export function computeScores(items: Item[], answers: Answers): Scores {
   return { sub, exposure, distress };
 }
 
-export const BAND_COLORS = ["#6c958b", "#7f9a52", "#9e7a35", "#a85a45"] as const;
+// Severity ramp (rank 0 minimal → 3 significant), tuned for the dark navy theme.
+export const BAND_COLORS = ["#38bdf8", "#fbbf24", "#f97316", "#ef4444"] as const;
