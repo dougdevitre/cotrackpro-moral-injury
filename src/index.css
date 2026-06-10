@@ -2013,3 +2013,122 @@ html {
 .mi-onboard-skip:hover {
   color: var(--ink);
 }
+
+/* --------------------- Cost & dividend calculator ------------------------ */
+.mi-calc-source {
+  font-size: 13px;
+  color: var(--ink-soft);
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0 0 8px;
+}
+.mi-calc-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 6px 0 8px;
+}
+.mi-calc-mode-help {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.mi-calc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 6px 0 16px;
+}
+.mi-calc-field-wide {
+  grid-column: 1 / -1;
+}
+.mi-calc-help {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+.mi-calc-range {
+  width: 100%;
+  accent-color: var(--accent);
+}
+.mi-calc-reset {
+  margin-top: 4px;
+}
+.mi-calc-results {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 14px;
+}
+.mi-calc-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.mi-calc-figure.cost {
+  border-color: rgba(245, 158, 11, 0.5);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.1), transparent), var(--card);
+}
+.mi-calc-figure.dividend {
+  border-color: rgba(56, 189, 248, 0.5);
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.12), transparent), var(--card);
+}
+.mi-calc-figure-label {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+.mi-calc-figure-value {
+  font-size: clamp(24px, 5vw, 34px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+.mi-calc-figure.cost .mi-calc-figure-value {
+  color: var(--gold);
+}
+.mi-calc-figure.dividend .mi-calc-figure-value {
+  color: var(--accent-2);
+}
+.mi-calc-figure-sub {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.mi-calc-band {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+.mi-calc-assumptions {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.mi-calc-disclaimer {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  margin-top: 8px;
+}
+@media (max-width: 560px) {
+  .mi-calc-grid {
+    grid-template-columns: 1fr;
+  }
+  .mi-calc-results {
+    grid-template-columns: 1fr;
+  }
+}

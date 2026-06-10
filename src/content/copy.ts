@@ -93,7 +93,66 @@ export const HOME = {
       body: "Supervisors, judges, and directors: read your team's ethical climate and build an environment where doing right is the easy path.",
       cta: "Build a moral environment",
     },
+    {
+      view: "calculator" as const,
+      title: "Cost & dividend calculator",
+      body: "Put a conservative number on what unaddressed moral injury costs — and the dividend from reducing it. Pre-fills from your reflection and climate check.",
+      cta: "Open the calculator",
+    },
   ],
+};
+
+export const CALCULATOR = {
+  kicker: "CoTrackPro · Practitioner Wellbeing",
+  title: "Moral-injury cost & dividend",
+  lede:
+    "A transparent, conservative estimate of what unaddressed moral injury costs each year — and the dividend you'd recover by reducing it. Every assumption is on the surface and yours to change.",
+  modeLabel: "What are you estimating?",
+  modes: {
+    caseload: { label: "My caseload", help: "One practitioner's cases per year." },
+    jurisdiction: {
+      label: "A team or jurisdiction",
+      help: "Practitioners or staff across an office, court, or region.",
+    },
+  },
+  fields: {
+    scaleCaseload: { label: "Cases per year", help: "Roughly how many cases you carry annually." },
+    scaleJurisdiction: {
+      label: "Practitioners / staff",
+      help: "How many people the estimate covers.",
+    },
+    exposure: {
+      label: "Baseline moral-injury exposure",
+      help: "0–100. Pre-filled from your reflection's exposure score when available.",
+    },
+    costFactor: {
+      label: "Annual cost per unit ($)",
+      help: "Cost attributable to moral injury — turnover, sick days, errors, lost effectiveness.",
+    },
+    reduction: {
+      label: "Achievable protective reduction",
+      help: "0–100. Pre-filled from your climate check — a weaker climate means more room to recover.",
+    },
+    fraction: {
+      label: "Conservative fraction (floor)",
+      help: "A deliberately low multiplier so the figure under-claims rather than over-claims.",
+    },
+  },
+  costTitle: "Estimated annual cost",
+  costSub: "of unaddressed moral injury, before acting",
+  dividendTitle: "Protective dividend",
+  dividendSub: "recovered by the reduction above",
+  residualTitle: "Residual cost after acting",
+  rangeNote: "Shown as a range, not a precise figure.",
+  assumptionsTitle: "Your assumptions",
+  reset: "Reset to suggested values",
+  source: {
+    reflection: "Exposure pre-filled from your completed reflection.",
+    climate: "Reduction pre-filled from your leaders' climate check.",
+    none: "Estimate — complete a reflection or climate check to personalize these.",
+  },
+  disclaimer:
+    "An educational planning estimate, not an accounting figure, a clinical measure, or legal or financial advice. The coefficients are illustrative defaults you should replace with your own. Nothing here is transmitted or stored off your device unless you opt into on-device saving.",
 };
 
 export const LANDING = {

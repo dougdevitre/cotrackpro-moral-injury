@@ -12,6 +12,7 @@ const TABS: { view: View; label: string }[] = [
   { view: "standards", label: "Standards" },
   { view: "longview", label: "Long view" },
   { view: "leaders", label: "Leaders" },
+  { view: "calculator", label: "Calculator" },
 ];
 
 export function Nav({ view, onNavigate }: { view: View; onNavigate: (v: View) => void }) {

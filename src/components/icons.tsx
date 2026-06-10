@@ -86,6 +86,18 @@ const PATHS: Record<View, ReactElement> = {
       <path d="M8 7l4-4 4 4" />
     </>
   ),
+  calculator: (
+    <>
+      <rect x="5" y="3" width="14" height="18" rx="2" />
+      <path d="M8 7h8" />
+      <path d="M8 11h.01" />
+      <path d="M12 11h.01" />
+      <path d="M16 11h.01" />
+      <path d="M8 15h.01" />
+      <path d="M12 15h.01" />
+      <path d="M16 14.5v3" />
+    </>
+  ),
   about: (
     <>
       <circle cx="12" cy="12" r="9" />
