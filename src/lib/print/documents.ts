@@ -14,7 +14,7 @@ function fmtDate(iso: string): string {
 
 function meterBar(label: string, valueLabel: string, pct: number, color: string): string {
   const w = Math.max(0, Math.min(100, pct));
-  return `<div style="margin:0 0 16px">
+  return `<div class="avoid" style="margin:0 0 16px">
     <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
       <span style="font-weight:600;font-size:15px;color:${BRAND.ink}">${esc(label)}</span>
       <span style="font-size:12.5px;color:${BRAND.inkSoft}">${esc(valueLabel)}</span>
@@ -26,7 +26,7 @@ function meterBar(label: string, valueLabel: string, pct: number, color: string)
 }
 
 function triageCard(tier: TriageTier, title: string, body: string): string {
-  return `<div style="border-left:3px solid ${TIER_COLOR[tier]};padding:2px 0 2px 16px;margin:0 0 14px">
+  return `<div class="avoid" style="border-left:3px solid ${TIER_COLOR[tier]};padding:2px 0 2px 16px;margin:0 0 14px">
     <p style="font-weight:600;font-size:15px;margin:0 0 3px;color:${BRAND.ink}">${esc(title)}</p>
     <p style="font-size:14px;color:${BRAND.inkSoft};margin:0">${esc(body)}</p>
   </div>`;
@@ -50,7 +50,7 @@ export function buildReflectionSummaryHtml(d: ReflectionSummaryInput): string {
   const meters = d.meters.map((m) => meterBar(m.label, m.valueLabel, m.pct, m.color)).join("");
   const subs = d.subs
     .map(
-      (s) => `<div style="margin:0 0 11px">
+      (s) => `<div class="avoid" style="margin:0 0 11px">
         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">
           <span style="font-size:14px;font-weight:600;color:${BRAND.ink}">${esc(s.label)}</span>
           <span style="font-size:12px;color:${BRAND.inkSoft}">${Math.round(s.pct)}/100</span>
@@ -93,7 +93,7 @@ export function buildReflectionSummaryHtml(d: ReflectionSummaryInput): string {
 export function buildCommitmentCertificateHtml(d: CommitmentCertificateData): string {
   const pledges = d.commitments
     .map(
-      (c) => `<li style="display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #eef2f7;font-size:14.5px;line-height:1.5;list-style:none">
+      (c) => `<li class="avoid" style="display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #eef2f7;font-size:14.5px;line-height:1.5;list-style:none">
         <span style="flex-shrink:0;width:10px;height:10px;border-radius:99px;margin-top:6px;background:${TIER_COLOR[c.tier]}"></span>
         <span>${esc(c.text)}</span>
       </li>`
@@ -110,7 +110,7 @@ export function buildCommitmentCertificateHtml(d: CommitmentCertificateData): st
     <p style="font-size:14.5px;color:${BRAND.ink}">I commit to the following protective practices:</p>
     <ul style="margin:8px 0 0;padding:0">${pledges}</ul>
     ${personal}
-    <div style="margin-top:34px;display:flex;justify-content:space-between;gap:40px">
+    <div class="avoid" style="margin-top:34px;display:flex;justify-content:space-between;gap:40px">
       <div style="flex:1;border-top:1px solid ${BRAND.ink};padding-top:6px;font-size:12px;color:${BRAND.inkSoft}">Signature</div>
       <div style="flex:1;border-top:1px solid ${BRAND.ink};padding-top:6px;font-size:12px;color:${BRAND.inkSoft}">Date</div>
     </div>`;
@@ -141,7 +141,7 @@ export function buildPracticePlanHtml(d: PracticePlanInput): string {
       d.commitments
         .map(
           (c) =>
-            `<div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #eef2f7;font-size:14.5px;color:${BRAND.ink}"><span style="color:${BRAND.sky};font-weight:700">›</span><span>${esc(c)}</span></div>`
+            `<div class="avoid" style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #eef2f7;font-size:14.5px;color:${BRAND.ink}"><span style="color:${BRAND.sky};font-weight:700">›</span><span>${esc(c)}</span></div>`
         )
         .join("")
     : "";
@@ -149,7 +149,7 @@ export function buildPracticePlanHtml(d: PracticePlanInput): string {
     ? `<h2 class="sec">If-then habits</h2>` +
       d.habits
         .map(
-          (h) => `<div style="border:1px solid ${BRAND.line};border-radius:8px;padding:12px 14px;margin:0 0 9px">
+          (h) => `<div class="avoid" style="border:1px solid ${BRAND.line};border-radius:8px;padding:12px 14px;margin:0 0 9px">
             <span style="color:${BRAND.ink};font-size:14.5px"><b>${esc(h.cue)}</b>, then ${esc(h.then)}.</span>
             ${h.why ? `<div style="font-size:13px;color:${BRAND.inkSoft};margin-top:5px">${esc(h.why)}</div>` : ""}
           </div>`

@@ -35,12 +35,15 @@ export function renderDocument(o: DocOptions): string {
   const idLine = o.docId
     ? `<p class="docid">${esc(o.title)} · ${esc(o.docId)} · generated on this device</p>`
     : "";
+  // Dark documents (the poster) print full-bleed; light documents keep a page margin.
+  const pageMargin = dark ? "0" : "0.6in";
+  const printPad = dark ? "0.7in 0.78in" : "10px 0";
 
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8" />
 <title>${esc(o.title)}</title>
 <style>
-  @page { size: ${size}; margin: 0.6in; }
+  @page { size: ${size}; margin: ${pageMargin}; }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
   body {
@@ -49,21 +52,25 @@ export function renderDocument(o: DocOptions): string {
     background: ${bg};
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    line-height: 1.5;
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
   .sheet { max-width: 760px; margin: 0 auto; padding: 40px 48px; }
-  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; break-after: avoid; }
   .brandname { font-weight: 700; letter-spacing: -0.02em; font-size: 16px; color: ${ink}; }
   .kick { letter-spacing: 0.2em; text-transform: uppercase; font-size: 11px; color: ${accent}; font-weight: 700; margin: 0; }
-  h1.doc { font-size: 28px; margin: 6px 0 4px; letter-spacing: -0.015em; color: ${ink}; }
+  h1.doc { font-size: 28px; margin: 6px 0 4px; letter-spacing: -0.015em; color: ${ink}; break-after: avoid; }
   .sub { font-size: 14.5px; color: ${inkSoft}; margin: 0 0 6px; max-width: 60ch; }
   .accent-rule { height: 3px; width: 200px; background: ${accent}; border-radius: 2px; margin: 16px 0 22px; }
-  h2.sec { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: ${accent}; font-weight: 700; margin: 24px 0 10px; }
-  p { margin: 0 0 10px; }
+  h2.sec { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: ${accent}; font-weight: 700; margin: 24px 0 10px; break-after: avoid; }
+  p { margin: 0 0 10px; orphans: 3; widows: 3; }
+  .avoid { break-inside: avoid; page-break-inside: avoid; }
   .docid { margin-top: 22px; font-size: 11px; color: ${inkSoft}; }
-  .disc { font-size: 10.5px; color: ${inkSoft}; line-height: 1.5; margin-top: 14px; border-top: 1px solid ${line}; padding-top: 12px; }
+  .disc { font-size: 10.5px; color: ${inkSoft}; line-height: 1.5; margin-top: 14px; border-top: 1px solid ${line}; padding-top: 12px; break-inside: avoid; }
   .noprint { background: ${accent}; color: #04121f; font-family: ${BRAND.sans}; font-size: 13px; text-align: center; padding: 9px 14px; font-weight: 600; }
-  @media print { .noprint { display: none; } .sheet { padding: 8px 0; } }
+  @media print { .noprint { display: none; } .sheet { padding: ${printPad}; } }
 </style></head>
 <body>
   <div class="noprint">Use your browser’s Print dialog and choose “Save as PDF.”</div>

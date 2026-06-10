@@ -464,9 +464,14 @@ body,
 }
 .mi-logo {
   display: block;
-  border-radius: 8px;
-  object-fit: cover;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  height: 30px;
+  width: auto;
+  max-width: 132px;
+  object-fit: contain;
+  background: #fff;
+  padding: 3px 5px;
+  border-radius: 7px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 .mi-wordmark {
   font-family: "Geist Sans", system-ui, sans-serif;

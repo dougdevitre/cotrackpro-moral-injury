@@ -17,7 +17,12 @@ export function Nav({ view, onNavigate }: { view: View; onNavigate: (v: View) =>
     <header className="mi-nav">
       <div className="mi-nav-inner">
         <button className="mi-brand" onClick={() => onNavigate("home")} aria-label="CoTrackPro home">
-          <img className="mi-logo" src="/logo.jpg" alt="" width={28} height={28} />
+          <img
+            className="mi-logo"
+            src="https://assets.cotrackpro.com/CoTrackPro%2BLogo.jpg"
+            alt=""
+            height={30}
+          />
           <span className="mi-wordmark">CoTrackPro</span>
         </button>
         <nav className="mi-tabs" aria-label="Sections">
