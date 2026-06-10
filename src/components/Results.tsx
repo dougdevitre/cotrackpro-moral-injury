@@ -2,6 +2,9 @@ import type { Reading, Role, Scores, Subscale } from "../types";
 import { BAND_COLORS } from "../lib/scoring";
 import { buildTriage } from "../lib/triage";
 import { buildResultPayload } from "../lib/schema";
+import { buildReflectionSummaryHtml } from "../lib/print/documents";
+import { openPrintable } from "../lib/print/layout";
+import { BAND_PRINT_COLORS } from "../lib/print/brand";
 import { SUB_META, COPY } from "../content/copy";
 import { CRISIS, CRISIS_THRESHOLD } from "../content/config";
 import { relatedRulesForRole } from "../data/itemSet";
@@ -25,6 +28,35 @@ export function Results({ scores, reading, role, onCopy, onRestart, onGoToPracti
   function handleCopy() {
     const payload = buildResultPayload(scores, reading, role);
     onCopy(JSON.stringify(payload, null, 2));
+  }
+
+  function savePdf() {
+    const html = buildReflectionSummaryHtml({
+      roleLabel: role?.label ?? "Professional",
+      dateISO: new Date().toISOString(),
+      meters: [
+        {
+          label: "Exposure",
+          valueLabel: `${reading.eBand.label} · ${scores.exposure}/100`,
+          pct: scores.exposure,
+          color: BAND_PRINT_COLORS[reading.eBand.rank],
+        },
+        {
+          label: "Personal distress",
+          valueLabel: `${reading.dBand.label} · ${scores.distress}/100`,
+          pct: scores.distress,
+          color: BAND_PRINT_COLORS[reading.dBand.rank],
+        },
+      ],
+      subs: SUB_ORDER.map((k) => ({ label: SUB_META[k].label, pct: scores.sub[k] })),
+      lead: reading.lead,
+      driver: reading.driver || undefined,
+      triage: triage.map((t) => ({ tier: t.tier, title: t.title, body: t.body })),
+      crisis:
+        scores.distress >= CRISIS_THRESHOLD ? `${CRISIS.label}. ${CRISIS.body}` : undefined,
+      footnote: COPY.footerDisclaimer,
+    });
+    openPrintable(html, "reflection-summary.html");
   }
 
   return (
@@ -150,7 +182,10 @@ export function Results({ scores, reading, role, onCopy, onRestart, onGoToPracti
 
       <div>
         <div className="mi-navrow" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
-          <button className="mi-btn" onClick={handleCopy}>
+          <button className="mi-btn" onClick={savePdf}>
+            Save as PDF
+          </button>
+          <button className="mi-btn ghost" onClick={handleCopy}>
             Copy private summary
           </button>
           <button className="mi-btn ghost" onClick={onRestart}>
