@@ -3,7 +3,7 @@ import { clientIpHash, isConfigured, json, rateLimit, reportPledge } from "./_li
 const REPORT_LIMIT = 20;
 const WINDOW = 3600;
 
-export default async function handler(req: Request): Promise<Response> {
+async function handler(req: Request): Promise<Response> {
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
   if (!isConfigured()) return json({ ok: false, error: "The wall is not enabled yet." }, 503);
 
@@ -27,3 +27,6 @@ export default async function handler(req: Request): Promise<Response> {
   await reportPledge(id);
   return json({ ok: true });
 }
+
+// Web Standard `fetch` export (see api/pledges.ts).
+export default { fetch: handler };
