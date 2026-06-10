@@ -21,18 +21,7 @@ import {
   type CertificateContext,
 } from "../lib/certificate";
 import { PostTest } from "./PostTest";
-
-function download(filename: string, content: string, mime: string) {
-  const blob = new Blob([content], { type: mime });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
+import { download } from "../lib/download";
 
 const moduleItems = AGENDA.filter((a) => a.view);
 

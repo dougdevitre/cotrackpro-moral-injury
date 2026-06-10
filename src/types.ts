@@ -60,7 +60,33 @@ export type View =
   | "practice"
   | "standards"
   | "longview"
+  | "commit"
   | "about";
+
+/* --------------------------- Commitment declaration ----------------------- */
+
+/** A single pledge in the moral-injury-prevention declaration. */
+export interface CommitmentItem {
+  id: string;
+  /** Which protective tier this pledge strengthens (drives the accent color). */
+  tier: TriageTier;
+  /** Short label for the commitment. */
+  label: string;
+  /** The first-person pledge statement. */
+  text: string;
+}
+
+/** Everything needed to render a personal commitment certificate. */
+export interface CommitmentCertificateData {
+  name: string;
+  dateISO: string;
+  /** The pledges the person affirmed, in display order. */
+  commitments: CommitmentItem[];
+  /** Optional free-text personal commitment. */
+  personal?: string;
+  /** Short on-device verification id (not a credential). */
+  declarationId: string;
+}
 
 export interface GuideStep {
   prompt: string;

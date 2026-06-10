@@ -57,6 +57,12 @@ export const HOME = {
       cta: "Build a practice plan",
     },
     {
+      view: "commit" as const,
+      title: "Commit",
+      body: "Make a personal declaration to prevent moral injury — and generate a certificate you can sign and keep.",
+      cta: "Make your commitment",
+    },
+    {
       view: "standards" as const,
       title: "Standards",
       body: "A plain-language reference to the professional-conduct rules most relevant to family-law work.",
@@ -114,6 +120,25 @@ export const LONGVIEW = {
     "Educational only. These are research-based patterns about risk and protection — not diagnoses, and not predictions about any specific child. Outcomes depend on many factors and can be buffered; the science is clear that it is never too late to make things better.",
   addHabit: "Add this as a habit",
   addedHabit: "In your practice plan ✓",
+};
+
+export const COMMIT = {
+  kicker: "Commit",
+  title: "Your commitment declaration",
+  lede:
+    "Moral injury is easier to prevent than to repair. Choose the protective practices you're willing to pledge, add one in your own words if you like, and generate a personal certificate you can sign, print, and keep where you'll see it.",
+  intro: "Affirm the commitments you're ready to make:",
+  personalLabel: "Add a commitment in your own words (optional)",
+  personalPlaceholder: "When ___ happens, I will ___.",
+  nameLabel: "Your name (as it should appear on the certificate)",
+  namePlaceholder: "Full name",
+  attest:
+    "I am making these commitments to myself, freely. I understand this is a personal pledge — not a credential, clinical assessment, or legal advice.",
+  generate: "Generate my certificate",
+  needName: "Add your name and affirm at least one commitment to generate your certificate.",
+  downloaded: "Certificate downloaded — open it and print or save as PDF.",
+  disclaimer:
+    "This declaration is a private, on-device tool for your own wellbeing and ethical practice. It is non-diagnostic and informational only, and confers no professional standing.",
 };
 
 export const FOOTER = {

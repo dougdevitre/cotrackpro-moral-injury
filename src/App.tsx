@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import type { CustomHabit, PracticePlan, ScoreProfile, View } from "./types";
 import { Nav } from "./components/Nav";
 import { Home } from "./components/Home";
@@ -8,6 +10,7 @@ import { DecideHub } from "./components/DecideHub";
 import { PracticeHub } from "./components/PracticeHub";
 import { RulesReference } from "./components/RulesReference";
 import { LongView } from "./components/LongView";
+import { CommitDeclaration } from "./components/CommitDeclaration";
 import { About } from "./components/About";
 import { Footer } from "./components/Footer";
 import { hasCustomHabit } from "./lib/practice";
@@ -85,6 +88,8 @@ export default function App() {
 
         {view === "longview" && <LongView plan={plan} onAddHabit={addLeverageHabit} />}
 
+        {view === "commit" && <CommitDeclaration onToast={onToast} />}
+
         {view === "about" && <About />}
 
         {view === "practice" && (
@@ -100,6 +105,8 @@ export default function App() {
       </div>
       <Footer onNavigate={setView} />
       {toast && <div className="mi-toast">{toast}</div>}
+      <Analytics />
+      <SpeedInsights />
     </div>
   );
 }
