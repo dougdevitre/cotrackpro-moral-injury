@@ -1219,3 +1219,161 @@ html {
     flex: 1 1 auto;
   }
 }
+
+/* ------------------------------ Landing ---------------------------------- */
+.mi-hero {
+  padding: 6px 0 2px;
+}
+.mi-hero-title {
+  font-family: "Geist Sans", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 8vw, 52px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  margin: 10px 0 16px;
+  color: var(--ink);
+}
+.mi-hero-title .accent {
+  color: var(--accent-2);
+}
+.mi-hero-sub {
+  font-size: clamp(16px, 2.6vw, 18px);
+  color: var(--ink-soft);
+  max-width: 62ch;
+  margin: 0 0 24px;
+  line-height: 1.55;
+}
+.mi-hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.mi-hero-trust {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.mi-section {
+  margin-top: 44px;
+}
+.mi-section-h {
+  font-family: "Geist Sans", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(20px, 4vw, 26px);
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+.mi-section-lede {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+.mi-steps {
+  display: grid;
+  gap: 12px;
+}
+@media (min-width: 620px) {
+  .mi-steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.mi-step {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: border-color 0.18s, transform 0.12s;
+}
+.mi-step:hover {
+  border-color: var(--accent-2);
+  transform: translateY(-2px);
+}
+.mi-step-n {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent-2);
+}
+.mi-step-t {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.mi-step-b {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.mi-pillars {
+  display: grid;
+  gap: 12px;
+}
+@media (min-width: 620px) {
+  .mi-pillars {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.mi-pillar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+  border-left: 3px solid var(--accent);
+  background: rgba(56, 189, 248, 0.05);
+  border-radius: 0 12px 12px 0;
+}
+.mi-pillar-t {
+  font-weight: 600;
+  font-size: 15.5px;
+  color: var(--ink);
+}
+.mi-pillar-b {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.mi-roles-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.mi-role-chip {
+  font-size: 13px;
+  color: var(--ink-soft);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 7px 13px;
+}
+.mi-closing {
+  margin-top: 48px;
+  padding: 30px 28px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: radial-gradient(120% 100% at 100% 0%, rgba(14, 165, 233, 0.16), transparent 60%),
+    var(--card);
+}
+.mi-closing-h {
+  font-family: "Geist Sans", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(20px, 4.5vw, 28px);
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+.mi-closing-b {
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  max-width: 58ch;
+  margin: 0 0 18px;
+}

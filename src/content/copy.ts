@@ -77,6 +77,65 @@ export const HOME = {
   ],
 };
 
+export const LANDING = {
+  hero: {
+    kicker: "CoTrackPro · Practitioner Wellbeing",
+    title: "Do the right thing —",
+    titleAccent: "especially when no one is looking.",
+    subtitle:
+      "A confidential toolkit for everyone in the family-law system. Understand the moral weight you carry, make cleaner calls under pressure, and build habits that keep your work aligned with your values — even when cutting a corner would be easier, more profitable, or invisible.",
+    primary: { label: "Start a reflection", view: "reflect" as const },
+    secondary: { label: "Take the CLE/CE course", view: "course" as const },
+    trust: "Private by design — nothing you enter is transmitted or stored off your device.",
+  },
+  steps: [
+    {
+      n: "01",
+      title: "See the weight",
+      body: "A short, confidential reflection separates what you've been exposed to from how it's landing on you.",
+      view: "reflect" as const,
+    },
+    {
+      n: "02",
+      title: "Decide well under pressure",
+      body: "Quick guided checks for the moments a deadline, a fee, or 'winning' pulls you off course.",
+      view: "decide" as const,
+    },
+    {
+      n: "03",
+      title: "Commit to staying whole",
+      body: "Turn it into if-then habits and a personal pledge you can sign, keep, and share.",
+      view: "commit" as const,
+    },
+  ],
+  pillars: [
+    {
+      title: "Private by design",
+      body: "Everything stays on your device. No accounts, no tracking of what you reflect on.",
+    },
+    {
+      title: "Grounded in the evidence",
+      body: "Built on the moral-injury literature and the professional-conduct rules your role actually touches.",
+    },
+    {
+      title: "Tailored to your role",
+      body: "Attorneys, judges, GALs, evaluators, mediators, caseworkers — the content meets you where you work.",
+    },
+    {
+      title: "Built to act on",
+      body: "Not a quiz that ends in a score — it ends in habits, decisions, and a commitment you can hold.",
+    },
+  ],
+  forWhoTitle: "Made for everyone in the family-law system",
+  modulesTitle: "Everything in the toolkit",
+  modulesLede: "Five minutes or an afternoon — start anywhere.",
+  closing: {
+    title: "Integrity is what you do when it costs you something.",
+    body: "Money, status, and standing in the community all reward cutting corners. This is a place to practice the other thing — quietly, on your own terms.",
+    cta: { label: "Make your commitment", view: "commit" as const },
+  },
+};
+
 export const DECIDE = {
   kicker: "Decide",
   title: "Decision guides",
