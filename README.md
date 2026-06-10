@@ -135,31 +135,55 @@ and deploys normally and the wall shows a "not enabled yet" state.
 
 ### Architecture
 
-- **Endpoints** — Vercel **Edge Functions** under `/api` (no added runtime dependency; they talk
-  to the store with `fetch`):
+- **Endpoints** — Vercel **Node Functions** under `/api` (web-handler signature: `Request` →
+  `Response`):
   - `api/pledges.ts` — `GET` (paginated public list) and `POST` (submit a pledge).
   - `api/report.ts` — `POST` to report a pledge; a pledge is auto-hidden after **3** reports.
-  - `api/_lib.ts` — shared helpers (KV access, salted-IP-hash rate limiting). `_`-prefixed files
-    are shared modules, not routes.
-- **Store** — **Vercel KV** (Upstash-compatible Redis), reached via its REST API.
-- The SPA rewrite in `vercel.json` yields to `/api`, and the existing CSP already allows
-  same-origin `/api` (`connect-src 'self'`) — no config change needed.
+  - `api/_lib.ts` — shared helpers (DynamoDB access, salted-IP-hash rate limiting). `_`-prefixed
+    files are shared modules, not routes.
+- **Store** — **Amazon DynamoDB**, a single on-demand table (via `@aws-sdk/lib-dynamodb`).
+- The SPA rewrite in `vercel.json` yields to `/api`. DynamoDB calls are server-side (function →
+  AWS), so the browser CSP is unaffected.
+
+### Single-table design
+
+One table with a string partition key `pk` and sort key `sk`:
+
+| `pk` | `sk` | Attributes | Purpose |
+|------|------|------------|---------|
+| `PLEDGE` | `<paddedTs>#<id>` | id, commitmentId, name, roleId, region, ts | a public pledge (newest first) |
+| `META` | `COUNT` | n | running total of submissions |
+| `REPORT` | `<id>` | reports | per-pledge report counter |
+| `HIDDEN` | `<id>` | — | marker; pledge filtered from the wall |
+| `RL` | `<ipHash>#<window>` | n, expireAt | rate-limit bucket |
+
+Enable **TTL** on the table with the attribute name **`expireAt`** so rate-limit rows self-clean.
 
 ### Activation
 
-1. In the Vercel project, add a **KV (Upstash Redis)** store and connect it. This injects the
-   env vars below.
-2. *(Recommended)* set `PLEDGE_IP_SALT` so hashed rate-limit keys can't be reversed.
-3. Redeploy. The wall goes live; **no code change required.**
+1. **Create the table** (on-demand billing) with partition key `pk` (String) and sort key `sk`
+   (String); enable TTL on attribute `expireAt`. No secondary indexes are required.
+2. **Create an IAM user** (or role) with access limited to that table and generate an access key:
+   ```json
+   {
+     "Effect": "Allow",
+     "Action": ["dynamodb:PutItem", "dynamodb:GetItem", "dynamodb:UpdateItem", "dynamodb:Query"],
+     "Resource": "arn:aws:dynamodb:<region>:<account>:table/<your-table-name>"
+   }
+   ```
+3. **Set the env vars** below in the Vercel project (Production), then redeploy. The wall goes
+   live; **no code change required.**
 
-| Env var | Set by | Purpose |
-|---------|--------|---------|
-| `KV_REST_API_URL` *or* `UPSTASH_REDIS_REST_URL` | Vercel KV / Upstash integration | REST endpoint |
-| `KV_REST_API_TOKEN` *or* `UPSTASH_REDIS_REST_TOKEN` | Vercel KV / Upstash integration | REST auth token |
-| `PLEDGE_IP_SALT` | you (optional) | Salt for the rate-limiter's IP hash |
+| Env var | Purpose |
+|---------|---------|
+| `PLEDGE_DDB_TABLE` | DynamoDB table name |
+| `AWS_REGION` | Table's AWS region (e.g. `us-east-1`) |
+| `AWS_ACCESS_KEY_ID` | IAM access key id |
+| `AWS_SECRET_ACCESS_KEY` | IAM secret access key |
+| `PLEDGE_IP_SALT` *(optional)* | Salt for the rate-limiter's IP hash |
 
-The handler accepts **either** name pair, so any standard Vercel KV or Upstash-for-Redis
-connection works without renaming variables.
+The wall stays dormant (`/api/pledges` returns `{"configured":false}`) until the table name,
+region, and credentials are all present.
 
 ### Privacy & moderation contract
 
@@ -171,8 +195,8 @@ connection works without renaming variables.
   length-capped) and profanity-checked; regions must match a fixed list.
 - Rate limiting (5 posts/hr/IP) uses only a **salted, truncated SHA-256 of the IP** as an
   ephemeral key — no raw IPs are stored.
-- The handler logic is covered by `src/lib/wallHandlers.test.ts` against an in-memory KV mock
-  (validation, rate-limit, report→hide).
+- The handler logic is covered by `src/lib/wallHandlers.test.ts` against an in-memory DynamoDB
+  fake (validation, rate-limit, pagination/total, report→hide).
 
 ---
 

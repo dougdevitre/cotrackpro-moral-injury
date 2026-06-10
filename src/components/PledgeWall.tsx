@@ -22,7 +22,7 @@ export function PledgeWall({ onToast }: { onToast: (msg: string) => void }) {
   const [configured, setConfigured] = useState(true);
   const [pledges, setPledges] = useState<WallPledge[]>([]);
   const [total, setTotal] = useState(0);
-  const [nextCursor, setNextCursor] = useState<number | null>(null);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [reported, setReported] = useState<Set<string>>(new Set());
 
@@ -38,7 +38,7 @@ export function PledgeWall({ onToast }: { onToast: (msg: string) => void }) {
 
   useEffect(() => {
     let active = true;
-    fetchPledges(0).then((data) => {
+    fetchPledges().then((data) => {
       if (!active) return;
       setConfigured(data.configured);
       setPledges(data.pledges);

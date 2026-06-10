@@ -10,14 +10,16 @@ export interface WallList {
   configured: boolean;
   pledges: WallPledge[];
   total: number;
-  nextCursor: number | null;
+  /** Opaque pagination token; null when there are no more pages. */
+  nextCursor: string | null;
 }
 
 export type SubmitResult = { ok: true; pledge: WallPledge } | { ok: false; error: string };
 
-export async function fetchPledges(cursor = 0): Promise<WallList> {
+export async function fetchPledges(cursor: string | null = null): Promise<WallList> {
   try {
-    const res = await fetch(`/api/pledges?cursor=${cursor}`, {
+    const qs = cursor ? `?cursor=${encodeURIComponent(cursor)}` : "";
+    const res = await fetch(`/api/pledges${qs}`, {
       headers: { Accept: "application/json" },
     });
     const data = (await res.json()) as Partial<WallList>;
@@ -25,7 +27,7 @@ export async function fetchPledges(cursor = 0): Promise<WallList> {
       configured: Boolean(data.configured),
       pledges: Array.isArray(data.pledges) ? data.pledges : [],
       total: typeof data.total === "number" ? data.total : 0,
-      nextCursor: typeof data.nextCursor === "number" ? data.nextCursor : null,
+      nextCursor: typeof data.nextCursor === "string" ? data.nextCursor : null,
     };
   } catch {
     return { configured: false, pledges: [], total: 0, nextCursor: null };
