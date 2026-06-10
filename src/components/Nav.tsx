@@ -7,6 +7,7 @@ const TABS: { view: View; label: string }[] = [
   { view: "decide", label: "Decide" },
   { view: "practice", label: "Practice" },
   { view: "commit", label: "Commit" },
+  { view: "share", label: "Share" },
   { view: "standards", label: "Standards" },
   { view: "longview", label: "Long view" },
 ];

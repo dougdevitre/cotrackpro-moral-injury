@@ -61,6 +61,7 @@ export type View =
   | "standards"
   | "longview"
   | "commit"
+  | "share"
   | "about";
 
 /* --------------------------- Commitment declaration ----------------------- */

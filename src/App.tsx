@@ -11,6 +11,7 @@ import { PracticeHub } from "./components/PracticeHub";
 import { RulesReference } from "./components/RulesReference";
 import { LongView } from "./components/LongView";
 import { CommitDeclaration } from "./components/CommitDeclaration";
+import { ShareStudio } from "./components/ShareStudio";
 import { About } from "./components/About";
 import { Footer } from "./components/Footer";
 import { hasCustomHabit } from "./lib/practice";
@@ -89,6 +90,8 @@ export default function App() {
         {view === "longview" && <LongView plan={plan} onAddHabit={addLeverageHabit} />}
 
         {view === "commit" && <CommitDeclaration onToast={onToast} />}
+
+        {view === "share" && <ShareStudio profile={profile} onToast={onToast} />}
 
         {view === "about" && <About />}
 

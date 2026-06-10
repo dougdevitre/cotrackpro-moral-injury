@@ -63,6 +63,12 @@ export const HOME = {
       cta: "Make your commitment",
     },
     {
+      view: "share" as const,
+      title: "Share",
+      body: "Generate a clean, on-brand image of your commitment to ethical practice — rendered privately on your device, ready to post.",
+      cta: "Open the share studio",
+    },
+    {
       view: "standards" as const,
       title: "Standards",
       body: "A plain-language reference to the professional-conduct rules most relevant to family-law work.",
@@ -134,6 +140,29 @@ export const LANDING = {
     body: "Money, status, and standing in the community all reward cutting corners. This is a place to practice the other thing — quietly, on your own terms.",
     cta: { label: "Make your commitment", view: "commit" as const },
   },
+};
+
+export const SHARE = {
+  kicker: "Share",
+  title: "Make something worth posting",
+  lede:
+    "Generate a clean, on-brand image about ethical practice and moral injury — pick a message, your role, and a format. It's rendered on your device with nothing uploaded, so share it wherever you like.",
+  messageLabel: "Message",
+  roleLabel: "Your role",
+  formatLabel: "Format",
+  download: "Download image",
+  messages: [
+    { id: "looking", text: "Do the right thing — especially when no one is looking." },
+    { id: "costs", text: "Integrity is what you do when it costs you something." },
+    { id: "chip", text: "A child's wellbeing is never a bargaining chip." },
+    { id: "trade", text: "I won't trade a child's safety for an easier file." },
+    { id: "clarity", text: "Burnout is not a badge. Moral clarity is." },
+    { id: "protect", text: "Protecting my values protects the families I serve." },
+  ],
+  formats: [
+    { id: "square" as const, label: "Square · 1080×1080", hint: "Feed posts (Instagram, LinkedIn)" },
+    { id: "story" as const, label: "Story · 1080×1920", hint: "Stories & reels covers" },
+  ],
 };
 
 export const DECIDE = {

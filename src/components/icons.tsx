@@ -60,6 +60,13 @@ const PATHS: Record<View, ReactElement> = {
       <circle cx="20" cy="5" r="1.2" />
     </>
   ),
+  share: (
+    <>
+      <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7" />
+      <path d="M12 3v12" />
+      <path d="M8 7l4-4 4 4" />
+    </>
+  ),
   about: (
     <>
       <circle cx="12" cy="12" r="9" />
