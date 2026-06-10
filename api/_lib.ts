@@ -8,10 +8,18 @@
  * are treated by Vercel as shared modules, not routes.
  */
 
-const KV_URL = process.env.KV_REST_API_URL;
-const KV_TOKEN = process.env.KV_REST_API_TOKEN;
+// Read env lazily (per call) so the runtime always sees the deployed values and
+// tests can configure the store before exercising a handler.
+function kvUrl(): string | undefined {
+  return process.env.KV_REST_API_URL;
+}
+function kvToken(): string | undefined {
+  return process.env.KV_REST_API_TOKEN;
+}
 // Optional salt so a hashed IP can't be reversed via a rainbow table.
-const IP_SALT = process.env.PLEDGE_IP_SALT ?? "cotrackpro-mi-pledge";
+function ipSalt(): string {
+  return process.env.PLEDGE_IP_SALT ?? "cotrackpro-mi-pledge";
+}
 
 export const KEYS = {
   list: "mi:pledges",
@@ -23,15 +31,15 @@ export const KEYS = {
 export const LIST_CAP = 5000;
 
 export function isConfigured(): boolean {
-  return Boolean(KV_URL && KV_TOKEN);
+  return Boolean(kvUrl() && kvToken());
 }
 
 /** Run one Redis command through the KV REST API. */
 export async function redis<T>(command: (string | number)[]): Promise<T> {
-  const res = await fetch(KV_URL as string, {
+  const res = await fetch(kvUrl() as string, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${KV_TOKEN}`,
+      Authorization: `Bearer ${kvToken()}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(command),
@@ -55,7 +63,7 @@ export function json(data: unknown, status = 200): Response {
 export async function clientIpHash(req: Request): Promise<string> {
   const fwd = req.headers.get("x-forwarded-for") ?? "unknown";
   const ip = fwd.split(",")[0].trim();
-  const bytes = new TextEncoder().encode(`${IP_SALT}:${ip}`);
+  const bytes = new TextEncoder().encode(`${ipSalt()}:${ip}`);
   const digest = await crypto.subtle.digest("SHA-256", bytes);
   return Array.from(new Uint8Array(digest))
     .map((b) => b.toString(16).padStart(2, "0"))
