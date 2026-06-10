@@ -20,7 +20,7 @@ function meterBar(label: string, valueLabel: string, pct: number, color: string)
       <span style="font-size:12.5px;color:${BRAND.inkSoft}">${esc(valueLabel)}</span>
     </div>
     <div style="height:12px;background:#eef2f7;border:1px solid ${BRAND.line};border-radius:99px;overflow:hidden">
-      <div style="height:100%;width:${w}%;background:${color};border-radius:99px"></div>
+      <div style="width:${w}%;border-top:12px solid ${color}"></div>
     </div>
   </div>`;
 }
@@ -56,7 +56,7 @@ export function buildReflectionSummaryHtml(d: ReflectionSummaryInput): string {
           <span style="font-size:12px;color:${BRAND.inkSoft}">${Math.round(s.pct)}/100</span>
         </div>
         <div style="height:8px;background:#eef2f7;border:1px solid ${BRAND.line};border-radius:99px;overflow:hidden">
-          <div style="height:100%;width:${Math.max(0, Math.min(100, s.pct))}%;background:${BRAND.sky2};border-radius:99px"></div>
+          <div style="width:${Math.max(0, Math.min(100, s.pct))}%;border-top:8px solid ${BRAND.sky2}"></div>
         </div>
       </div>`
     )
@@ -203,7 +203,94 @@ export function buildMoralWinsHtml(d: MoralWinsInput): string {
   });
 }
 
-/* ----------------------------- 5 · Poster -------------------------------- */
+/* -------------------------- 5 · Leader's pledge -------------------------- */
+
+export interface LeaderPledgeInput {
+  name?: string;
+  dateISO: string;
+  pledges: string[];
+}
+
+export function buildLeaderPledgeHtml(d: LeaderPledgeInput): string {
+  const items = d.pledges
+    .map(
+      (p) => `<li class="avoid" style="display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #eef2f7;font-size:14.5px;line-height:1.5;list-style:none">
+        <span style="flex-shrink:0;width:18px;height:18px;border-radius:5px;margin-top:1px;background:${BRAND.indigo};display:inline-flex;align-items:center;justify-content:center">
+          <span style="color:#fff;font-size:12px;line-height:1">✓</span>
+        </span>
+        <span>${esc(p)}</span>
+      </li>`
+    )
+    .join("");
+
+  const body = `
+    <p style="font-size:14.5px;color:${BRAND.ink}">To the people whose moral environment I shape, I commit:</p>
+    <ul style="margin:8px 0 0;padding:0">${items}</ul>
+    <div class="avoid" style="margin-top:34px;display:flex;justify-content:space-between;gap:40px">
+      <div style="flex:1;border-top:1px solid ${BRAND.ink};padding-top:6px;font-size:12px;color:${BRAND.inkSoft}">Signature</div>
+      <div style="flex:1;border-top:1px solid ${BRAND.ink};padding-top:6px;font-size:12px;color:${BRAND.inkSoft}">Date</div>
+    </div>`;
+
+  return renderDocument({
+    title: "A leader's pledge",
+    kicker: "Building a moral environment",
+    heading: "A leader's pledge",
+    sub: d.name?.trim()
+      ? `Made by ${d.name.trim()} · ${fmtDate(d.dateISO)}`
+      : `Made ${fmtDate(d.dateISO)}`,
+    body,
+    accent: BRAND.indigo,
+    footnote:
+      "A personal leadership commitment to practices that reduce moral injury on a team. Non-diagnostic and informational only — not a credential, clinical assessment, or legal advice.",
+  });
+}
+
+/* -------------------------- 6 · Moral debrief ---------------------------- */
+
+export interface MoralDebriefInput {
+  dateISO: string;
+  when: string;
+  groundRules: string[];
+  prompts: string[];
+  close: string;
+}
+
+export function buildMoralDebriefHtml(d: MoralDebriefInput): string {
+  const rules = d.groundRules
+    .map(
+      (r) =>
+        `<div class="avoid" style="display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:14px;color:${BRAND.ink}"><span style="color:${BRAND.sky};font-weight:700">•</span><span>${esc(r)}</span></div>`
+    )
+    .join("");
+  const prompts = d.prompts
+    .map(
+      (p, i) =>
+        `<div class="avoid" style="display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #eef2f7;font-size:14.5px;color:${BRAND.ink}"><span style="flex-shrink:0;font-weight:700;color:${BRAND.skyDeep}">${i + 1}</span><span>${esc(p)}</span></div>`
+    )
+    .join("");
+
+  const body = `
+    <h2 class="sec">When to run one</h2>
+    <p style="font-size:14.5px;color:${BRAND.ink}">${esc(d.when)}</p>
+    <h2 class="sec">Ground rules</h2>
+    ${rules}
+    <h2 class="sec">Prompts, in order</h2>
+    ${prompts}
+    <h2 class="sec">Closing</h2>
+    <p style="font-size:14.5px;color:${BRAND.ink}">${esc(d.close)}</p>`;
+
+  return renderDocument({
+    title: "Moral-debrief guide",
+    kicker: "Facilitation guide",
+    heading: "Running a moral debrief",
+    sub: "A 20-minute structure for processing a morally hard case as a team.",
+    body,
+    footnote:
+      "A facilitation aid for team leaders. Educational and informational only — not clinical care or a substitute for professional support. If someone is in crisis, connect them with appropriate help.",
+  });
+}
+
+/* ----------------------------- 7 · Poster -------------------------------- */
 
 export interface PosterInput {
   quote: string;

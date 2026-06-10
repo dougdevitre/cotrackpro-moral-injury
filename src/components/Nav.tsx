@@ -11,6 +11,7 @@ const TABS: { view: View; label: string }[] = [
   { view: "share", label: "Share" },
   { view: "standards", label: "Standards" },
   { view: "longview", label: "Long view" },
+  { view: "leaders", label: "Leaders" },
 ];
 
 export function Nav({ view, onNavigate }: { view: View; onNavigate: (v: View) => void }) {

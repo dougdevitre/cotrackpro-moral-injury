@@ -60,6 +60,14 @@ const PATHS: Record<View, ReactElement> = {
       <circle cx="20" cy="5" r="1.2" />
     </>
   ),
+  leaders: (
+    <>
+      <circle cx="9" cy="8" r="3" />
+      <path d="M3.5 19a5.5 5.5 0 0 1 11 0" />
+      <path d="M16 8.2a2.6 2.6 0 0 1 0 5.1" />
+      <path d="M17.2 19a5 5 0 0 0-2.7-4.4" />
+    </>
+  ),
   encourage: (
     <>
       <path d="M12 3v2" />

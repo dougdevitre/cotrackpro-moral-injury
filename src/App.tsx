@@ -14,6 +14,7 @@ import { CommitDeclaration } from "./components/CommitDeclaration";
 import { ShareStudio } from "./components/ShareStudio";
 import { Onboarding } from "./components/Onboarding";
 import { EncourageHub } from "./components/EncourageHub";
+import { LeadersHub } from "./components/LeadersHub";
 import { About } from "./components/About";
 import { Footer } from "./components/Footer";
 import { hasCustomHabit } from "./lib/practice";
@@ -112,6 +113,8 @@ export default function App() {
         )}
 
         {view === "encourage" && <EncourageHub onToast={onToast} />}
+
+        {view === "leaders" && <LeadersHub onToast={onToast} />}
 
         {view === "about" && <About />}
 

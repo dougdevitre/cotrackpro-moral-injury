@@ -63,6 +63,7 @@ export type View =
   | "commit"
   | "share"
   | "encourage"
+  | "leaders"
   | "about";
 
 /* --------------------------- Commitment declaration ----------------------- */
