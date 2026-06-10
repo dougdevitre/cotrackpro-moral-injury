@@ -8,6 +8,7 @@ import type { PracticePlan } from "../types";
  */
 const KEY = "cotrackpro.mi.plan";
 const CONSENT_KEY = "cotrackpro.mi.persist";
+const WELCOME_KEY = "cotrackpro.mi.welcomed";
 
 export function storageAvailable(): boolean {
   try {
@@ -73,6 +74,28 @@ export function clear(): void {
   try {
     window.localStorage.removeItem(KEY);
     window.localStorage.removeItem(CONSENT_KEY);
+    window.localStorage.removeItem(WELCOME_KEY);
+  } catch {
+    /* no-op */
+  }
+}
+
+/**
+ * Non-personal, on-device flag recording that the first-run welcome has been
+ * seen. Kept separate from plan consent: it stores no reflection data, only a
+ * "1", and (like everything here) never leaves the device.
+ */
+export function hasWelcomed(): boolean {
+  try {
+    return window.localStorage.getItem(WELCOME_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function markWelcomed(): void {
+  try {
+    window.localStorage.setItem(WELCOME_KEY, "1");
   } catch {
     /* no-op */
   }

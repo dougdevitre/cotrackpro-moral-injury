@@ -12,12 +12,15 @@ import { RulesReference } from "./components/RulesReference";
 import { LongView } from "./components/LongView";
 import { CommitDeclaration } from "./components/CommitDeclaration";
 import { ShareStudio } from "./components/ShareStudio";
+import { Onboarding } from "./components/Onboarding";
 import { About } from "./components/About";
 import { Footer } from "./components/Footer";
 import { hasCustomHabit } from "./lib/practice";
 import {
   hasConsent,
+  hasWelcomed,
   loadPlan,
+  markWelcomed,
   savePlan,
   setConsent,
   storageAvailable,
@@ -29,6 +32,15 @@ export default function App() {
   const [view, setView] = useState<View>("home");
   const [profile, setProfile] = useState<ScoreProfile | null>(null);
   const [toast, setToast] = useState("");
+
+  // First-run onboarding + the role it captures (for prefilling modules).
+  const [welcomed, setWelcomed] = useState<boolean>(() => hasWelcomed());
+  const [roleId, setRoleId] = useState<string | null>(null);
+
+  function dismissOnboarding() {
+    markWelcomed();
+    setWelcomed(true);
+  }
 
   // Opt-in, on-device-only persistence.
   const [persist, setPersistState] = useState<boolean>(() => storageAvailable() && hasConsent());
@@ -94,7 +106,9 @@ export default function App() {
 
         {view === "commit" && <CommitDeclaration onToast={onToast} />}
 
-        {view === "share" && <ShareStudio profile={profile} onToast={onToast} />}
+        {view === "share" && (
+          <ShareStudio profile={profile} defaultRoleId={roleId} onToast={onToast} />
+        )}
 
         {view === "about" && <About />}
 
@@ -111,6 +125,16 @@ export default function App() {
       </main>
       <Footer onNavigate={setView} />
       {toast && <div className="mi-toast">{toast}</div>}
+      {!welcomed && (
+        <Onboarding
+          onPick={(rid, v) => {
+            if (rid) setRoleId(rid);
+            dismissOnboarding();
+            setView(v);
+          }}
+          onSkip={dismissOnboarding}
+        />
+      )}
       <Analytics />
       <SpeedInsights />
     </div>

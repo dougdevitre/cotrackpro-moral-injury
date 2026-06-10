@@ -6,13 +6,18 @@ import { renderPoster, type PosterFormat } from "../lib/share/poster";
 
 export function ShareStudio({
   profile,
+  defaultRoleId,
   onToast,
 }: {
   profile: ScoreProfile | null;
+  /** Fallback role (e.g. captured during onboarding) when no reflection exists. */
+  defaultRoleId?: string | null;
   onToast: (msg: string) => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [roleId, setRoleId] = useState<string>(profile?.roleId ?? ROLES[0].id);
+  const [roleId, setRoleId] = useState<string>(
+    profile?.roleId ?? defaultRoleId ?? ROLES[0].id
+  );
   const [messageId, setMessageId] = useState<string>(SHARE.messages[0].id);
   const [format, setFormat] = useState<PosterFormat>("square");
 

@@ -142,6 +142,49 @@ export const LANDING = {
   },
 };
 
+export const ONBOARDING = {
+  kicker: "Welcome",
+  title: "Where should we start?",
+  lede:
+    "A few private tools for staying whole in hard work. Tell us a little and we'll point you to the right one — nothing is saved or sent.",
+  roleLabel: "Your role (optional)",
+  rolePlaceholder: "Select your role…",
+  intentsLabel: "What brings you here today?",
+  skip: "I'll explore on my own",
+  intents: [
+    {
+      id: "weight",
+      view: "reflect" as const,
+      title: "I'm feeling the weight of this work",
+      body: "Take a confidential self-reflection on the moral load you carry.",
+    },
+    {
+      id: "decision",
+      view: "decide" as const,
+      title: "I have a hard call to make",
+      body: "Work through a short, guided decision check.",
+    },
+    {
+      id: "habits",
+      view: "practice" as const,
+      title: "I want to build better habits",
+      body: "Set if-then practices that protect your ethics before pressure hits.",
+    },
+    {
+      id: "credit",
+      view: "course" as const,
+      title: "I need CLE/CE credit",
+      body: "Take the self-study course and earn a certificate.",
+    },
+    {
+      id: "commit",
+      view: "commit" as const,
+      title: "I'm ready to make a commitment",
+      body: "Write a personal pledge to prevent moral injury — and keep it.",
+    },
+  ],
+};
+
 export const SHARE = {
   kicker: "Share",
   title: "Make something worth posting",
