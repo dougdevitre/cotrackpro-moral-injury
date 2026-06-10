@@ -9,12 +9,14 @@
  */
 
 // Read env lazily (per call) so the runtime always sees the deployed values and
-// tests can configure the store before exercising a handler.
+// tests can configure the store before exercising a handler. Accept either the
+// Vercel-KV names or the raw Upstash names — the Marketplace integration may
+// inject one pair or the other depending on how the store was connected.
 function kvUrl(): string | undefined {
-  return process.env.KV_REST_API_URL;
+  return process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
 }
 function kvToken(): string | undefined {
-  return process.env.KV_REST_API_TOKEN;
+  return process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
 }
 // Optional salt so a hashed IP can't be reversed via a rainbow table.
 function ipSalt(): string {
