@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ScoreProfile } from "../types";
 import { ROLES } from "../data/roles";
 import { SHARE } from "../content/copy";
-import { renderPoster, type PosterFormat } from "../lib/share/poster";
+import { downloadCanvasPng, renderPoster, type PosterFormat } from "../lib/share/poster";
 
 export function ShareStudio({
   profile,
@@ -30,21 +30,11 @@ export function ShareStudio({
     renderPoster(canvas, { message: message.text, roleLabel: role.label, format });
   }, [message.text, role.label, format]);
 
-  function handleDownload() {
+  async function handleDownload() {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    canvas.toBlob((blob) => {
-      if (!blob) return;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `cotrackpro-${message.id}-${format}.png`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      onToast("Image downloaded to this device");
-    }, "image/png");
+    const ok = await downloadCanvasPng(canvas, `cotrackpro-${message.id}-${format}.png`);
+    if (ok) onToast("Image downloaded to this device");
   }
 
   return (

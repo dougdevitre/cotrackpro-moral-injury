@@ -7,6 +7,8 @@ export interface PosterOptions {
   message: string;
   roleLabel: string;
   format: PosterFormat;
+  /** Footer-right line; defaults to the moral-injury pledge tagline. */
+  tagline?: string;
 }
 
 export const POSTER_SIZES: Record<PosterFormat, { w: number; h: number }> = {
@@ -148,5 +150,29 @@ export function renderPoster(canvas: HTMLCanvasElement, opts: PosterOptions): vo
   ctx.fillText("morality.cotrackpro.com", pad, h - pad);
   ctx.textAlign = "right";
   ctx.fillStyle = C.sky;
-  ctx.fillText("A pledge to prevent moral injury", w - pad, h - pad);
+  ctx.fillText(opts.tagline ?? "A pledge to prevent moral injury", w - pad, h - pad);
+}
+
+/**
+ * Download a canvas as a PNG on the user's device. Resolves false if the
+ * browser couldn't produce a blob. Stays on-device — no upload.
+ */
+export function downloadCanvasPng(canvas: HTMLCanvasElement, filename: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        resolve(false);
+        return;
+      }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      resolve(true);
+    }, "image/png");
+  });
 }

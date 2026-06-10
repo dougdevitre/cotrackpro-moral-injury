@@ -38,6 +38,8 @@ The app is a small multi-part toolkit with a shared top nav:
 - **Practice** — build "if-then" habits (implementation intentions; Gollwitzer, 1999) and standing commitments, tailored to your reflection profile when present. Export as Markdown, or download a `.ics` weekly reminder that uses your own calendar (no backend). Optional, on-device-only persistence.
 - **Standards** — a plain-language reference to the ABA Model Rules of Professional Conduct most relevant to family-law work, grouped by category, each linking to the official ABA text. Summaries are our own paraphrase (rule text/comments are ABA-copyrighted); a jurisdiction caveat is shown throughout. The attorney reflection items are tied to specific rules, and the attorney results page surfaces "standards to revisit."
 - **The long view** — shows how a single action or inaction ripples across a child's life (in the moment → why it lands → over a lifetime), pairing every harm pathway with the protective "leverage" move in the professional's control. Grounded in the ACE study (Felitti et al., 1998), toxic-stress science (Center on the Developing Child), interparental-conflict research (Cummings & Davies; Amato), and the AAP's safe/stable/nurturing-relationships framework, with probabilistic (not deterministic) language enforced by a test. Each pathway's leverage can be added to the Practice plan as a ready-made if-then habit in one click.
+- **Calculator** — a transparent, **educational** cost & dividend estimator: a conservative figure for the annual cost of unaddressed moral injury, and the protective "dividend" from reducing it. Caseload vs. jurisdiction modes; every coefficient is a named, editable assumption (no hidden multipliers). Exposure pre-fills from a completed reflection and the achievable reduction from a leaders' climate check, both still editable. Pure model in `src/lib/costDividend.ts`, fully unit-tested. On-device only.
+- **Pledge wall** — an **optional, public** space where professionals stand behind one protective commitment. This is the one feature that leaves the device; it is opt-in, gated, and structurally walled off from the private reflection (see [Community pledge wall](#community-pledge-wall-optional-backend) below). Ships **dormant** until a datastore is provisioned.
 - **About & evidence** (footer link) — consolidates the design principles (reflective not accusatory, leverage not dread, probabilistic not deterministic, private by design, educational not advice) and the full grouped evidence base with links.
 
 ## Project structure
@@ -125,11 +127,59 @@ CLE certificate and accreditation packet — set them before offering the course
 
 ---
 
+## Community pledge wall (optional backend)
+
+The pledge wall is the **only** part of the app that sends data off the device. It is opt-in,
+gated, and deliberately **inactive until you provision a datastore** — until then the app builds
+and deploys normally and the wall shows a "not enabled yet" state.
+
+### Architecture
+
+- **Endpoints** — Vercel **Edge Functions** under `/api` (no added runtime dependency; they talk
+  to the store with `fetch`):
+  - `api/pledges.ts` — `GET` (paginated public list) and `POST` (submit a pledge).
+  - `api/report.ts` — `POST` to report a pledge; a pledge is auto-hidden after **3** reports.
+  - `api/_lib.ts` — shared helpers (KV access, salted-IP-hash rate limiting). `_`-prefixed files
+    are shared modules, not routes.
+- **Store** — **Vercel KV** (Upstash-compatible Redis), reached via its REST API.
+- The SPA rewrite in `vercel.json` yields to `/api`, and the existing CSP already allows
+  same-origin `/api` (`connect-src 'self'`) — no config change needed.
+
+### Activation
+
+1. In the Vercel project, add a **KV (Upstash Redis)** store and connect it. This injects the
+   env vars below.
+2. *(Recommended)* set `PLEDGE_IP_SALT` so hashed rate-limit keys can't be reversed.
+3. Redeploy. The wall goes live; **no code change required.**
+
+| Env var | Set by | Purpose |
+|---------|--------|---------|
+| `KV_REST_API_URL` | Vercel KV integration | KV REST endpoint |
+| `KV_REST_API_TOKEN` | Vercel KV integration | KV REST auth token |
+| `PLEDGE_IP_SALT` | you (optional) | Salt for the rate-limiter's IP hash |
+
+### Privacy & moderation contract
+
+- A submission carries **only**: a commitment chosen from the fixed catalog, an optional first
+  name, a role, and a **coarse fixed region**. It **never** accepts reflection answers, scores,
+  free-form notes, or any other PII — this is enforced in `src/lib/pledge.ts` (pure, shared by
+  client and server, unit-tested).
+- Consent is explicit and required server-side. Names are sanitized (letters/spaces/hyphens only,
+  length-capped) and profanity-checked; regions must match a fixed list.
+- Rate limiting (5 posts/hr/IP) uses only a **salted, truncated SHA-256 of the IP** as an
+  ephemeral key — no raw IPs are stored.
+- The handler logic is covered by `src/lib/wallHandlers.test.ts` against an in-memory KV mock
+  (validation, rate-limit, report→hide).
+
+---
+
 ## Privacy & safety (read before deploying)
 
-- **No backend, no persistence by default.** Answers live in React state for the session only and
-  are never transmitted. This is intentional: the data is health-adjacent and potentially
-  self-incriminating, so the safest production posture is to not store it.
+- **The private reflection has no backend and is not persisted by default.** Reflection answers
+  live in React state for the session only and are never transmitted. This is intentional: the
+  data is health-adjacent and potentially self-incriminating, so the safest posture is to not
+  store it. The **pledge wall** above is the single, opt-in exception, and it receives none of
+  this data.
 - The **Copy private summary** button puts a JSON result on the user's clipboard — it does not
   send anything anywhere.
 - If you later add a consented, identity-linked store, treat it as sensitive: encrypt at rest,
