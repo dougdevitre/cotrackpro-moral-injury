@@ -69,8 +69,11 @@ export default function App() {
 
   return (
     <div className="mi-root">
+      <a className="mi-skip" href="#main-content">
+        Skip to content
+      </a>
       <Nav view={view} onNavigate={setView} />
-      <div className="mi-wrap">
+      <main id="main-content" className="mi-wrap">
         {view === "home" && <Home onNavigate={setView} />}
 
         {view === "course" && <CourseHub onNavigate={setView} onToast={onToast} />}
@@ -105,7 +108,7 @@ export default function App() {
             onToast={onToast}
           />
         )}
-      </div>
+      </main>
       <Footer onNavigate={setView} />
       {toast && <div className="mi-toast">{toast}</div>}
       <Analytics />

@@ -1494,3 +1494,24 @@ html {
 .mi-share-canvas.story {
   max-width: 300px;
 }
+
+/* ------------------------- Skip-to-content link -------------------------- */
+.mi-skip {
+  position: absolute;
+  left: 12px;
+  top: -48px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--accent-2);
+  color: #04121f;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: top 0.16s ease;
+}
+.mi-skip:focus-visible {
+  top: 12px;
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}

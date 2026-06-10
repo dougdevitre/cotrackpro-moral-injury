@@ -9,12 +9,14 @@
       name="description"
       content="A confidential, non-diagnostic moral-injury self-reflection for professionals in the family-law ecosystem."
     />
+    <meta name="author" content="CoTrackPro" />
     <title>Moral Injury Self-Reflection — CoTrackPro</title>
     <link rel="canonical" href="https://morality.cotrackpro.com/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="CoTrackPro" />
     <meta
       property="og:title"
@@ -31,6 +33,10 @@
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Moral Injury Self-Reflection — a confidential tool from CoTrackPro"
+    />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -46,9 +52,44 @@
       name="twitter:image"
       content="https://morality.cotrackpro.com/og.png"
     />
+    <meta
+      name="twitter:image:alt"
+      content="Moral Injury Self-Reflection — a confidential tool from CoTrackPro"
+    />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Moral Injury Self-Reflection",
+        "url": "https://morality.cotrackpro.com/",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web",
+        "browserRequirements": "Requires JavaScript",
+        "description": "A confidential, non-diagnostic moral-injury self-reflection for professionals in the family-law ecosystem.",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "CoTrackPro",
+          "url": "https://cotrackpro.com"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <div style="max-width: 40rem; margin: 4rem auto; padding: 0 1.5rem; font-family: system-ui, sans-serif; color: #0f172a; line-height: 1.6;">
+        <h1>Moral Injury Self-Reflection</h1>
+        <p>
+          This confidential self-reflection from CoTrackPro needs JavaScript to run.
+          Please enable JavaScript, or learn more at
+          <a href="https://cotrackpro.com">cotrackpro.com</a>.
+        </p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
