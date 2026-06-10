@@ -86,7 +86,7 @@ export default function App() {
       </a>
       <Nav view={view} onNavigate={setView} />
       <main id="main-content" className="mi-wrap">
-        {view === "home" && <Home onNavigate={setView} />}
+        {view === "home" && <Home onNavigate={setView} onToast={onToast} />}
 
         {view === "course" && <CourseHub onNavigate={setView} onToast={onToast} />}
 

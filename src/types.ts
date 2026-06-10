@@ -137,6 +137,16 @@ export interface ScoreProfile {
   roleId: string | null;
 }
 
+/** On-device daily-reflection streak (no personal content, never transmitted). */
+export interface StreakState {
+  /** Local YYYY-MM-DD of the most recent "reflected today", or null. */
+  lastDoneISO: string | null;
+  /** Consecutive-day count ending at lastDoneISO. */
+  count: number;
+  /** Best streak ever reached on this device. */
+  longest: number;
+}
+
 /* ----------------------------- Long view module --------------------------- */
 
 export interface EvidenceItem {

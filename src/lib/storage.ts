@@ -1,4 +1,4 @@
-import type { PracticePlan } from "../types";
+import type { PracticePlan, StreakState } from "../types";
 
 /**
  * Opt-in, ON-DEVICE-ONLY persistence for the practice plan.
@@ -9,6 +9,7 @@ import type { PracticePlan } from "../types";
 const KEY = "cotrackpro.mi.plan";
 const CONSENT_KEY = "cotrackpro.mi.persist";
 const WELCOME_KEY = "cotrackpro.mi.welcomed";
+const STREAK_KEY = "cotrackpro.mi.streak";
 
 export function storageAvailable(): boolean {
   try {
@@ -75,6 +76,37 @@ export function clear(): void {
     window.localStorage.removeItem(KEY);
     window.localStorage.removeItem(CONSENT_KEY);
     window.localStorage.removeItem(WELCOME_KEY);
+    window.localStorage.removeItem(STREAK_KEY);
+  } catch {
+    /* no-op */
+  }
+}
+
+/**
+ * On-device daily-reflection streak. Holds only counts and a date (no reflection
+ * content), never leaves the device, and is removed by `clear()`.
+ */
+export function loadStreak(): StreakState | null {
+  try {
+    const raw = window.localStorage.getItem(STREAK_KEY);
+    if (!raw) return null;
+    const p = JSON.parse(raw) as StreakState;
+    if (
+      (p.lastDoneISO === null || typeof p.lastDoneISO === "string") &&
+      typeof p.count === "number" &&
+      typeof p.longest === "number"
+    ) {
+      return p;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveStreak(state: StreakState): void {
+  try {
+    window.localStorage.setItem(STREAK_KEY, JSON.stringify(state));
   } catch {
     /* no-op */
   }

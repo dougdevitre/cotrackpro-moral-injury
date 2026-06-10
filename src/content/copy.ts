@@ -142,6 +142,31 @@ export const LANDING = {
   },
 };
 
+export const DAILY = {
+  kicker: "Today's reflection",
+  done: "I reflected on this today",
+  doneState: "Logged for today — see you tomorrow",
+  streakStart: "Start a daily streak",
+  prompts: [
+    "Where did you feel a pull between what was easy and what was right today?",
+    "What's one boundary that protected your integrity this week?",
+    "Whose wellbeing are you carrying that isn't yours to fix alone?",
+    "What would “doing right when no one is looking” look like in your next case?",
+    "Name one thing you witnessed that you haven't had time to process.",
+    "What corner are you tempted to cut — and what would holding the line cost you?",
+    "Who could you ask for help before the pressure peaks?",
+    "What part of today are you quietly proud of, even if no one noticed?",
+    "Where did you stay silent when you wished you'd spoken?",
+    "What's one practice that keeps you steady under a deadline?",
+    "Whose perspective have you stopped considering lately?",
+    "What does rest look like for you this week — and when will you take it?",
+    "What value do you most want your work to reflect tomorrow?",
+    "Where are you confusing what's legal with what's right?",
+    "What would you do differently if you weren't afraid of the outcome?",
+    "Who reminded you recently why this work matters?",
+  ],
+};
+
 export const ONBOARDING = {
   kicker: "Welcome",
   title: "Where should we start?",
