@@ -2132,3 +2132,137 @@ html {
     grid-template-columns: 1fr;
   }
 }
+
+/* --------------------------- Pledge wall --------------------------------- */
+.mi-wall-privacy {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 0 0 10px;
+}
+.mi-wall-preview {
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 8px 0 14px;
+  padding-left: 12px;
+  border-left: 2px solid var(--accent);
+}
+.mi-wall-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 4px 0;
+}
+.mi-wall-name {
+  grid-column: 1 / -1;
+}
+.mi-wall-consent {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin: 14px 0;
+  cursor: pointer;
+}
+.mi-wall-consent input {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+.mi-wall-error {
+  color: #fda4af;
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+.mi-wall-success {
+  color: var(--accent-2);
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+.mi-wall-count {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin: 0 0 14px;
+}
+.mi-wall-empty,
+.mi-wall-loading {
+  color: var(--ink-soft);
+  background: var(--card);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  padding: 18px 20px;
+  font-size: 15px;
+}
+.mi-wall-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.mi-wall-item {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.mi-wall-item-text {
+  margin: 0 0 10px;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.mi-wall-item-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.mi-wall-who {
+  font-weight: 600;
+  color: var(--accent-2);
+}
+.mi-wall-report {
+  margin-top: 10px;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.mi-wall-report:disabled {
+  color: var(--accent-2);
+  text-decoration: none;
+  cursor: default;
+}
+.mi-wall-more {
+  margin-top: 14px;
+}
+.mi-wall-disclaimer {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  margin-top: 8px;
+}
+@media (max-width: 560px) {
+  .mi-wall-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

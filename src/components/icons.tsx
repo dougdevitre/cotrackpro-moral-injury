@@ -98,6 +98,18 @@ const PATHS: Record<View, ReactElement> = {
       <path d="M16 14.5v3" />
     </>
   ),
+  wall: (
+    <>
+      <path d="M3 9h18" />
+      <path d="M3 15h18" />
+      <path d="M8 4v5" />
+      <path d="M14 4v5" />
+      <path d="M5 15v5" />
+      <path d="M11 15v5" />
+      <path d="M17 15v5" />
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+    </>
+  ),
   about: (
     <>
       <circle cx="12" cy="12" r="9" />

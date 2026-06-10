@@ -3,13 +3,19 @@ import { COMMIT } from "../content/copy";
 import { COMMITMENTS } from "../data/commitments";
 import { buildCommitmentCertificateHtml, buildPosterHtml } from "../lib/print/documents";
 import { openPrintable } from "../lib/print/layout";
-import type { CommitmentCertificateData } from "../types";
+import type { CommitmentCertificateData, View } from "../types";
 
 function makeDeclarationId(): string {
   return "MIP-" + Math.random().toString(36).slice(2, 8).toUpperCase();
 }
 
-export function CommitDeclaration({ onToast }: { onToast: (msg: string) => void }) {
+export function CommitDeclaration({
+  onToast,
+  onNavigate,
+}: {
+  onToast: (msg: string) => void;
+  onNavigate?: (v: View) => void;
+}) {
   const [name, setName] = useState("");
   const [personal, setPersonal] = useState("");
   const [attested, setAttested] = useState(false);
@@ -124,6 +130,11 @@ export function CommitDeclaration({ onToast }: { onToast: (msg: string) => void 
           <button className="mi-btn ghost" disabled={!posterReady} onClick={makePoster}>
             {COMMIT.poster}
           </button>
+          {onNavigate && (
+            <button className="mi-btn ghost" onClick={() => onNavigate("wall")}>
+              {COMMIT.toWall}
+            </button>
+          )}
         </div>
         {!ready && <p className="mi-hint">{COMMIT.needName}</p>}
       </div>

@@ -50,3 +50,8 @@ export const COMMITMENTS: CommitmentItem[] = [
     text: "When a constraint forces a choice that harms the people I serve, I will document it and raise it through the proper channel rather than absorb it in silence.",
   },
 ];
+
+export function commitmentById(id: string | null | undefined): CommitmentItem | null {
+  if (!id) return null;
+  return COMMITMENTS.find((c) => c.id === id) ?? null;
+}

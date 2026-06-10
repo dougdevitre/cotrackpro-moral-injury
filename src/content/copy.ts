@@ -99,6 +99,12 @@ export const HOME = {
       body: "Put a conservative number on what unaddressed moral injury costs — and the dividend from reducing it. Pre-fills from your reflection and climate check.",
       cta: "Open the calculator",
     },
+    {
+      view: "wall" as const,
+      title: "The pledge wall",
+      body: "Optional and public: stand behind one protective commitment alongside others across the family-law system. Your reflection always stays private.",
+      cta: "Visit the pledge wall",
+    },
   ],
 };
 
@@ -153,6 +159,40 @@ export const CALCULATOR = {
   },
   disclaimer:
     "An educational planning estimate, not an accounting figure, a clinical measure, or legal or financial advice. The coefficients are illustrative defaults you should replace with your own. Nothing here is transmitted or stored off your device unless you opt into on-device saving.",
+};
+
+export const WALL = {
+  kicker: "CoTrackPro · Community",
+  title: "The pledge wall",
+  lede:
+    "A shared, public space where professionals across the family-law system stand behind one protective commitment. Adding yours is entirely optional.",
+  privacy:
+    "This is the one part of CoTrackPro that leaves your device. Your reflection, scores, and notes always stay private and local — the wall only ever receives the commitment you choose, an optional first name, your role, and a broad region. Nothing else.",
+  consentLabel:
+    "I understand this pledge will be posted publicly, and I'm choosing a first name and region I'm comfortable sharing.",
+  form: {
+    title: "Add your pledge",
+    commitment: "Choose the commitment you'll stand behind",
+    name: "First name (optional)",
+    namePlaceholder: "e.g. Sam",
+    role: "Your role",
+    rolePlaceholder: "Select a role",
+    region: "Region",
+    submit: "Post my pledge",
+    submitting: "Posting…",
+    success: "Your pledge is on the wall — thank you.",
+  },
+  wallTitle: "Pledges from the community",
+  empty: "No pledges yet. Be the first to stand behind a commitment.",
+  anonymous: "Someone",
+  report: "Report",
+  reported: "Reported — thank you",
+  loadMore: "Show more",
+  countSuffix: "professionals have pledged",
+  notConfigured:
+    "The community wall isn't switched on yet. Everything else in CoTrackPro works fully on your device — check back soon to add your public pledge.",
+  disclaimer:
+    "Pledges are moderated and may be removed. This is a voluntary statement of intent, not a professional record, a credential, or legal advice.",
 };
 
 export const LANDING = {
@@ -537,6 +577,7 @@ export const COMMIT = {
     "I am making these commitments to myself, freely. I understand this is a personal pledge — not a credential, clinical assessment, or legal advice.",
   generate: "Generate my certificate",
   poster: "Make a shareable poster",
+  toWall: "Add a pledge to the wall",
   needName: "Add your name and affirm at least one commitment to generate your certificate.",
   generated: "Opening your certificate — choose “Save as PDF” in the print dialog.",
   posterDone: "Opening your poster — choose “Save as PDF” in the print dialog.",
