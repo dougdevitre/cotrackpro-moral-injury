@@ -2,8 +2,15 @@ import type { View } from "../types";
 import { HOME, LANDING } from "../content/copy";
 import { ROLES } from "../data/roles";
 import { Icon } from "./icons";
+import { DailyPrompt } from "./DailyPrompt";
 
-export function Home({ onNavigate }: { onNavigate: (v: View) => void }) {
+export function Home({
+  onNavigate,
+  onToast,
+}: {
+  onNavigate: (v: View) => void;
+  onToast: (msg: string) => void;
+}) {
   const L = LANDING;
   return (
     <div className="mi-landing mi-fade">
@@ -24,6 +31,8 @@ export function Home({ onNavigate }: { onNavigate: (v: View) => void }) {
         </div>
         <p className="mi-hero-trust">{L.hero.trust}</p>
       </section>
+
+      <DailyPrompt onToast={onToast} />
 
       {/* How it works */}
       <section className="mi-section">

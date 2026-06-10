@@ -1229,6 +1229,67 @@ html {
 .mi-hero {
   padding: 6px 0 2px;
 }
+
+/* Daily reflection card */
+.mi-daily {
+  margin-top: 26px;
+  padding: 20px 22px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: radial-gradient(140% 120% at 0% 0%, rgba(56, 189, 248, 0.1), transparent 55%),
+    var(--card);
+}
+.mi-daily-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.mi-daily-kick {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.mi-daily-streak {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.mi-daily-streak.muted {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+.mi-daily-prompt {
+  font-size: clamp(17px, 3.4vw, 20px);
+  line-height: 1.4;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+.mi-daily-btn {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #04121f;
+  background: var(--accent-2);
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: filter 0.15s, opacity 0.15s;
+}
+.mi-daily-btn:hover {
+  filter: brightness(1.05);
+}
+.mi-daily-btn.done {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  cursor: default;
+}
 .mi-hero-title {
   font-family: "Geist Sans", system-ui, sans-serif;
   font-weight: 700;
