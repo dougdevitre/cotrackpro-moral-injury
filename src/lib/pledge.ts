@@ -1,5 +1,5 @@
-import { COMMITMENTS, commitmentById } from "../data/commitments";
-import { ROLES, roleById } from "../data/roles";
+import { COMMITMENTS, commitmentById } from "../data/commitments.js";
+import { ROLES, roleById } from "../data/roles.js";
 
 /**
  * Pure, shared validation + moderation for the community pledge wall.
