@@ -13,7 +13,13 @@ export function Nav({ view, onNavigate }: { view: View; onNavigate: (v: View) =>
   return (
     <header className="mi-nav">
       <button className="mi-brand" onClick={() => onNavigate("home")}>
-        <img className="mi-logo" src="/logo.svg" alt="" width={28} height={28} />
+        <img
+          className="mi-logo"
+          src="https://assets.cotrackpro.com/CoTrackPro%2BLogo.jpg"
+          alt=""
+          width={28}
+          height={28}
+        />
         <span className="mi-wordmark">CoTrackPro</span>
       </button>
       <nav className="mi-tabs" aria-label="Sections">
