@@ -1,4 +1,4 @@
-import type { PracticePlan, StreakState } from "../types";
+import type { MoralWin, PracticePlan, StreakState } from "../types";
 
 /**
  * Opt-in, ON-DEVICE-ONLY persistence for the practice plan.
@@ -10,6 +10,7 @@ const KEY = "cotrackpro.mi.plan";
 const CONSENT_KEY = "cotrackpro.mi.persist";
 const WELCOME_KEY = "cotrackpro.mi.welcomed";
 const STREAK_KEY = "cotrackpro.mi.streak";
+const WINS_KEY = "cotrackpro.mi.wins";
 
 export function storageAvailable(): boolean {
   try {
@@ -77,6 +78,40 @@ export function clear(): void {
     window.localStorage.removeItem(CONSENT_KEY);
     window.localStorage.removeItem(WELCOME_KEY);
     window.localStorage.removeItem(STREAK_KEY);
+    window.localStorage.removeItem(WINS_KEY);
+  } catch {
+    /* no-op */
+  }
+}
+
+/**
+ * Moral-wins log — user-written content, so (like the practice plan) it is only
+ * persisted once the user has opted into on-device storage. Never transmitted.
+ */
+export function loadWins(): MoralWin[] {
+  try {
+    if (!hasConsent()) return [];
+    const raw = window.localStorage.getItem(WINS_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as MoralWin[];
+    if (
+      Array.isArray(parsed) &&
+      parsed.every(
+        (w) => typeof w?.id === "string" && typeof w?.text === "string" && typeof w?.dateISO === "string"
+      )
+    ) {
+      return parsed;
+    }
+    return [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveWins(wins: MoralWin[]): void {
+  try {
+    if (!hasConsent()) return;
+    window.localStorage.setItem(WINS_KEY, JSON.stringify(wins));
   } catch {
     /* no-op */
   }

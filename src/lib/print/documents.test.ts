@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildCommitmentCertificateHtml,
+  buildMoralWinsHtml,
   buildPosterHtml,
   buildPracticePlanHtml,
   buildReflectionSummaryHtml,
@@ -54,6 +55,16 @@ describe("print documents", () => {
     expect(html).toContain("Center the child.");
     expect(html).toContain("When pressured");
     expect(html).toContain("Buys a beat.");
+  });
+
+  it("moral wins lists entries and escapes user text", () => {
+    const html = buildMoralWinsHtml({
+      dateISO: "2026-01-01T00:00:00.000Z",
+      wins: [{ text: "I held the <line>.", dateISO: "2026-01-01T00:00:00.000Z" }],
+    });
+    expect(html).toContain("My moral wins");
+    expect(html).toContain("I held the &lt;line&gt;.");
+    expect(html).not.toContain("<line>");
   });
 
   it("poster is a dark document with the quote", () => {

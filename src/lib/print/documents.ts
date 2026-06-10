@@ -168,7 +168,42 @@ export function buildPracticePlanHtml(d: PracticePlanInput): string {
   });
 }
 
-/* ----------------------------- 4 · Poster -------------------------------- */
+/* --------------------------- 4 · Moral wins ------------------------------ */
+
+export interface MoralWinsInput {
+  dateISO: string;
+  wins: { text: string; dateISO: string }[];
+}
+
+export function buildMoralWinsHtml(d: MoralWinsInput): string {
+  const items = d.wins
+    .map(
+      (w) => `<li class="avoid" style="display:flex;gap:11px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #eef2f7;list-style:none">
+        <span style="flex-shrink:0;width:9px;height:9px;border-radius:99px;margin-top:7px;background:${BRAND.green}"></span>
+        <span style="font-size:14.5px;line-height:1.5;color:${BRAND.ink}">${esc(w.text)}
+          <span style="display:block;font-size:12px;color:${BRAND.inkSoft};margin-top:2px">${esc(fmtDate(w.dateISO))}</span>
+        </span>
+      </li>`
+    )
+    .join("");
+
+  const body = `
+    <p style="font-size:14.5px;color:${BRAND.ink}">Moments I chose the harder right over the easier wrong:</p>
+    <ul style="margin:10px 0 0;padding:0">${items}</ul>`;
+
+  return renderDocument({
+    title: "My moral wins",
+    kicker: "Moral wins",
+    heading: "The work I did right",
+    sub: `Kept ${fmtDate(d.dateISO)} — a private record of integrity under pressure.`,
+    body,
+    accent: BRAND.green,
+    footnote:
+      "A personal, on-device record a practitioner keeps to recognize their own ethical practice. Non-diagnostic and informational only — not a credential or legal advice.",
+  });
+}
+
+/* ----------------------------- 5 · Poster -------------------------------- */
 
 export interface PosterInput {
   quote: string;
