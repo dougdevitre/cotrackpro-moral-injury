@@ -27,7 +27,7 @@ import {
   UpdateCommand,
 } from "@aws-sdk/lib-dynamodb";
 import { createHash, randomUUID } from "node:crypto";
-import type { WallPledge } from "../src/lib/pledge";
+import type { WallPledge } from "../src/lib/pledge.js";
 
 function tableName(): string | undefined {
   return process.env.PLEDGE_DDB_TABLE;

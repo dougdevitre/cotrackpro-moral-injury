@@ -1,4 +1,4 @@
-import { clientIpHash, isConfigured, json, rateLimit, reportPledge } from "./_lib";
+import { clientIpHash, isConfigured, json, rateLimit, reportPledge } from "./_lib.js";
 
 const REPORT_LIMIT = 20;
 const WINDOW = 3600;
