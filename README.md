@@ -154,9 +154,12 @@ and deploys normally and the wall shows a "not enabled yet" state.
 
 | Env var | Set by | Purpose |
 |---------|--------|---------|
-| `KV_REST_API_URL` | Vercel KV integration | KV REST endpoint |
-| `KV_REST_API_TOKEN` | Vercel KV integration | KV REST auth token |
+| `KV_REST_API_URL` *or* `UPSTASH_REDIS_REST_URL` | Vercel KV / Upstash integration | REST endpoint |
+| `KV_REST_API_TOKEN` *or* `UPSTASH_REDIS_REST_TOKEN` | Vercel KV / Upstash integration | REST auth token |
 | `PLEDGE_IP_SALT` | you (optional) | Salt for the rate-limiter's IP hash |
+
+The handler accepts **either** name pair, so any standard Vercel KV or Upstash-for-Redis
+connection works without renaming variables.
 
 ### Privacy & moderation contract
 

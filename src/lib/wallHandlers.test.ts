@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import pledgesHandler from "../../api/pledges";
 import reportHandler from "../../api/report";
+import { isConfigured } from "../../api/_lib";
 import type { WallPledge } from "../lib/pledge";
 
 /**
@@ -100,6 +101,28 @@ afterEach(() => {
   vi.unstubAllGlobals();
   delete process.env.KV_REST_API_URL;
   delete process.env.KV_REST_API_TOKEN;
+  delete process.env.UPSTASH_REDIS_REST_URL;
+  delete process.env.UPSTASH_REDIS_REST_TOKEN;
+});
+
+describe("store configuration", () => {
+  it("is configured via the Vercel-KV env names", () => {
+    expect(isConfigured()).toBe(true); // set in beforeEach
+  });
+
+  it("is also configured via the raw Upstash env names", () => {
+    delete process.env.KV_REST_API_URL;
+    delete process.env.KV_REST_API_TOKEN;
+    process.env.UPSTASH_REDIS_REST_URL = KV_URL;
+    process.env.UPSTASH_REDIS_REST_TOKEN = "token";
+    expect(isConfigured()).toBe(true);
+  });
+
+  it("is not configured when neither pair is present", () => {
+    delete process.env.KV_REST_API_URL;
+    delete process.env.KV_REST_API_TOKEN;
+    expect(isConfigured()).toBe(false);
+  });
 });
 
 describe("GET /api/pledges", () => {
