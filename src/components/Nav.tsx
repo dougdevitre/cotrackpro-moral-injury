@@ -12,8 +12,15 @@ const TABS: { view: View; label: string }[] = [
 export function Nav({ view, onNavigate }: { view: View; onNavigate: (v: View) => void }) {
   return (
     <header className="mi-nav">
-      <button className="mi-wordmark" onClick={() => onNavigate("home")}>
-        CoTrackPro
+      <button className="mi-brand" onClick={() => onNavigate("home")}>
+        <img
+          className="mi-logo"
+          src="https://assets.cotrackpro.com/CoTrackPro%2BLogo.jpg"
+          alt=""
+          width={28}
+          height={28}
+        />
+        <span className="mi-wordmark">CoTrackPro</span>
       </button>
       <nav className="mi-tabs" aria-label="Sections">
         {TABS.map((t) => (
