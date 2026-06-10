@@ -14,11 +14,16 @@ const PAGE = 20;
 const POST_LIMIT = 5;
 const WINDOW = 3600;
 
-export default async function handler(req: Request): Promise<Response> {
+// Web Standard `fetch` export — the form Vercel's Node runtime serves as a web
+// handler (a bare default-export function is treated as the legacy req/res
+// signature and its returned Response is ignored).
+async function handler(req: Request): Promise<Response> {
   if (req.method === "GET") return getPledges(req);
   if (req.method === "POST") return addPledge(req);
   return json({ error: "Method not allowed" }, 405);
 }
+
+export default { fetch: handler };
 
 async function getPledges(req: Request): Promise<Response> {
   if (!isConfigured()) {
