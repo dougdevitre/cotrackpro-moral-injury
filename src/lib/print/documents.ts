@@ -20,7 +20,7 @@ function meterBar(label: string, valueLabel: string, pct: number, color: string)
       <span style="font-size:12.5px;color:${BRAND.inkSoft}">${esc(valueLabel)}</span>
     </div>
     <div style="height:12px;background:#eef2f7;border:1px solid ${BRAND.line};border-radius:99px;overflow:hidden">
-      <div style="height:100%;width:${w}%;background:${color};border-radius:99px"></div>
+      <div style="width:${w}%;border-top:12px solid ${color}"></div>
     </div>
   </div>`;
 }
@@ -56,7 +56,7 @@ export function buildReflectionSummaryHtml(d: ReflectionSummaryInput): string {
           <span style="font-size:12px;color:${BRAND.inkSoft}">${Math.round(s.pct)}/100</span>
         </div>
         <div style="height:8px;background:#eef2f7;border:1px solid ${BRAND.line};border-radius:99px;overflow:hidden">
-          <div style="height:100%;width:${Math.max(0, Math.min(100, s.pct))}%;background:${BRAND.sky2};border-radius:99px"></div>
+          <div style="width:${Math.max(0, Math.min(100, s.pct))}%;border-top:8px solid ${BRAND.sky2}"></div>
         </div>
       </div>`
     )

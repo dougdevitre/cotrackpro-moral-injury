@@ -35,9 +35,10 @@ export function renderDocument(o: DocOptions): string {
   const idLine = o.docId
     ? `<p class="docid">${esc(o.title)} · ${esc(o.docId)} · generated on this device</p>`
     : "";
-  // Dark documents (the poster) print full-bleed; light documents keep a page margin.
-  const pageMargin = dark ? "0" : "0.6in";
-  const printPad = dark ? "0.7in 0.78in" : "10px 0";
+  // Dark documents look dark on screen but print as legible ink-on-white, so the
+  // PDF is readable even when the browser's "Background graphics" option is off.
+  const pageMargin = "0.6in";
+  const printPad = "10px 0";
 
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8" />
@@ -63,17 +64,28 @@ export function renderDocument(o: DocOptions): string {
   .kick { letter-spacing: 0.2em; text-transform: uppercase; font-size: 11px; color: ${accent}; font-weight: 700; margin: 0; }
   h1.doc { font-size: 28px; margin: 6px 0 4px; letter-spacing: -0.015em; color: ${ink}; break-after: avoid; }
   .sub { font-size: 14.5px; color: ${inkSoft}; margin: 0 0 6px; max-width: 60ch; }
-  .accent-rule { height: 3px; width: 200px; background: ${accent}; border-radius: 2px; margin: 16px 0 22px; }
+  .accent-rule { width: 200px; border-top: 3px solid ${accent}; margin: 16px 0 22px; }
   h2.sec { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: ${accent}; font-weight: 700; margin: 24px 0 10px; break-after: avoid; }
   p { margin: 0 0 10px; orphans: 3; widows: 3; }
   .avoid { break-inside: avoid; page-break-inside: avoid; }
   .docid { margin-top: 22px; font-size: 11px; color: ${inkSoft}; }
   .disc { font-size: 10.5px; color: ${inkSoft}; line-height: 1.5; margin-top: 14px; border-top: 1px solid ${line}; padding-top: 12px; break-inside: avoid; }
   .noprint { background: ${accent}; color: #04121f; font-family: ${BRAND.sans}; font-size: 13px; text-align: center; padding: 9px 14px; font-weight: 600; }
-  @media print { .noprint { display: none; } .sheet { padding: ${printPad}; } }
+  @media print { .noprint { display: none; } .sheet { padding: ${printPad}; } }${
+    dark
+      ? `
+  @media print {
+    body { background: #ffffff; color: ${BRAND.ink}; }
+    .brandname, h1.doc { color: ${BRAND.ink}; }
+    .sub, .docid, .disc { color: ${BRAND.inkSoft}; }
+    .sheet p, .sheet blockquote { color: ${BRAND.ink} !important; }
+    .disc { border-top-color: ${BRAND.line}; }
+  }`
+      : ""
+  }
 </style></head>
 <body>
-  <div class="noprint">Use your browser’s Print dialog and choose “Save as PDF.”</div>
+  <div class="noprint">Print or “Save as PDF” from your browser’s dialog. For full color, enable “Background graphics.”</div>
   <div class="sheet">
     <div class="brand">${logoTile(34)}<span class="brandname">CoTrackPro</span></div>
     <p class="kick">${esc(o.kicker)}</p>
