@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { View } from "../types";
 import { Icon } from "./icons";
+import logoUrl from "../assets/cotrackpro-logo.jpg";
 
 const TABS: { view: View; label: string }[] = [
   { view: "course", label: "Course" },
@@ -35,12 +36,7 @@ export function Nav({ view, onNavigate }: { view: View; onNavigate: (v: View) =>
     <header className="mi-nav">
       <div className="mi-nav-inner">
         <button className="mi-brand" onClick={() => onNavigate("home")} aria-label="CoTrackPro home">
-          <img
-            className="mi-logo"
-            src="https://assets.cotrackpro.com/CoTrackPro%2BLogo.jpg"
-            alt=""
-            height={30}
-          />
+          <img className="mi-logo" src={logoUrl} alt="" height={30} />
           <span className="mi-wordmark">CoTrackPro</span>
         </button>
         <nav className="mi-tabs" aria-label="Sections">

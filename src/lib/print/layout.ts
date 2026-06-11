@@ -1,4 +1,4 @@
-import { BRAND, esc, logoTile } from "./brand";
+import { BRAND, esc, logoImg } from "./brand";
 import { download } from "../download";
 
 export type PageSize = "letter portrait" | "letter landscape";
@@ -87,7 +87,7 @@ export function renderDocument(o: DocOptions): string {
 <body>
   <div class="noprint">Print or “Save as PDF” from your browser’s dialog. For full color, enable “Background graphics.”</div>
   <div class="sheet">
-    <div class="brand">${logoTile(34)}<span class="brandname">CoTrackPro</span></div>
+    <div class="brand">${logoImg(34)}<span class="brandname">CoTrackPro</span></div>
     <p class="kick">${esc(o.kicker)}</p>
     <h1 class="doc">${esc(o.heading)}</h1>
     ${o.sub ? `<p class="sub">${esc(o.sub)}</p>` : ""}

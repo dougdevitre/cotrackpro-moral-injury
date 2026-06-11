@@ -1,4 +1,5 @@
 import type { TriageTier } from "../../types";
+import { LOGO_DATA_URI } from "../brand/logo";
 
 /** CoTrackPro brand tokens for print documents (mirrors src/index.css). */
 export const BRAND = {
@@ -36,15 +37,16 @@ export function esc(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
-/** The sky-tile check mark, sized for a document header. */
-export function logoTile(px = 34): string {
-  return `<span style="display:inline-flex;width:${px}px;height:${px}px;border-radius:${Math.round(
-    px * 0.27
-  )}px;background:linear-gradient(${BRAND.sky2},${BRAND.skyDeep});align-items:center;justify-content:center">
-    <svg width="${Math.round(px * 0.66)}" height="${Math.round(
-    px * 0.66
-  )}" viewBox="0 0 64 64"><path d="M20 33.5 L28.5 42 L45 24" fill="none" stroke="#04121f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </span>`;
+/** The CoTrackPro logo emblem on a white "chip", sized for a document header.
+ *  Inlined as a data URI so it survives the blob: print window (where relative
+ *  asset paths don't resolve). The hairline keeps the white chip defined on the
+ *  white PDF pages too. */
+export function logoImg(px = 30): string {
+  const pad = Math.round(px * 0.14);
+  const r = Math.round(px * 0.22);
+  return `<span style="display:inline-flex;align-items:center;justify-content:center;width:${px}px;height:${px}px;padding:${pad}px;border-radius:${r}px;background:#ffffff;border:1px solid ${BRAND.line};-webkit-print-color-adjust:exact;print-color-adjust:exact"><img src="${LOGO_DATA_URI}" alt="CoTrackPro" width="${
+    px - pad * 2
+  }" height="${px - pad * 2}" style="display:block;object-fit:contain" /></span>`;
 }
 
 /** Short, non-credential id stamped on each document. */

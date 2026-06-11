@@ -27,7 +27,7 @@ export function ShareStudio({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    renderPoster(canvas, { message: message.text, roleLabel: role.label, format });
+    void renderPoster(canvas, { message: message.text, roleLabel: role.label, format });
   }, [message.text, role.label, format]);
 
   async function handleDownload() {

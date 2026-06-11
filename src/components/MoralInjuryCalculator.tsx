@@ -63,7 +63,7 @@ export function MoralInjuryCalculator({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    renderPoster(canvas, {
+    void renderPoster(canvas, {
       message: shareMessage,
       roleLabel: shareRole,
       format: shareFormat,

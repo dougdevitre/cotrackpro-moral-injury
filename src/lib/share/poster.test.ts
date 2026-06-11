@@ -27,8 +27,9 @@ describe("wrapText", () => {
 });
 
 describe("POSTER_SIZES", () => {
-  it("defines square and story dimensions", () => {
+  it("defines square, story, and og dimensions", () => {
     expect(POSTER_SIZES.square).toEqual({ w: 1080, h: 1080 });
     expect(POSTER_SIZES.story).toEqual({ w: 1080, h: 1920 });
+    expect(POSTER_SIZES.og).toEqual({ w: 1200, h: 630 });
   });
 });

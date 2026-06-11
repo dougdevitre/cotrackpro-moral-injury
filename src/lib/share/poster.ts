@@ -1,7 +1,11 @@
 /** Client-side social-image (poster) renderer. Everything is drawn on the
- *  user's device with the Canvas 2D API — no network, no upload. */
+ *  user's device with the Canvas 2D API — no network, no upload. The logo is an
+ *  inlined data URI (see ../brand/logo), so drawing it never taints the canvas
+ *  and the PNG download keeps working. */
 
-export type PosterFormat = "square" | "story";
+import { LOGO_DATA_URI } from "../brand/logo";
+
+export type PosterFormat = "square" | "story" | "og";
 
 export interface PosterOptions {
   message: string;
@@ -14,6 +18,7 @@ export interface PosterOptions {
 export const POSTER_SIZES: Record<PosterFormat, { w: number; h: number }> = {
   square: { w: 1080, h: 1080 },
   story: { w: 1080, h: 1920 },
+  og: { w: 1200, h: 630 },
 };
 
 const SANS = `system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif`;
@@ -71,31 +76,51 @@ function roundRect(
   ctx.closePath();
 }
 
-function drawLogoTile(ctx: CanvasRenderingContext2D, x: number, y: number, size: number): void {
-  const grad = ctx.createLinearGradient(x, y, x, y + size);
-  grad.addColorStop(0, C.sky);
-  grad.addColorStop(1, C.skyDeep);
-  roundRect(ctx, x, y, size, size, Math.round(size * 0.27));
-  ctx.fillStyle = grad;
-  ctx.fill();
-  ctx.strokeStyle = C.tileInk;
-  ctx.lineWidth = Math.round(size * 0.1);
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-  ctx.beginPath();
-  ctx.moveTo(x + size * 0.28, y + size * 0.52);
-  ctx.lineTo(x + size * 0.44, y + size * 0.67);
-  ctx.lineTo(x + size * 0.72, y + size * 0.36);
-  ctx.stroke();
+/** Load the inlined logo once and reuse it across re-renders. A data-URI image
+ *  decodes synchronously-ish and never taints the canvas. */
+let logoPromise: Promise<HTMLImageElement> | null = null;
+function loadLogo(): Promise<HTMLImageElement> {
+  if (!logoPromise) {
+    logoPromise = new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = LOGO_DATA_URI;
+    });
+  }
+  return logoPromise;
 }
 
-/** Render the poster into `canvas`. Sizes the canvas to the chosen format. */
-export function renderPoster(canvas: HTMLCanvasElement, opts: PosterOptions): void {
+/** Draw the logo emblem inside a white rounded "chip", fit to `size` and
+ *  preserving the emblem's aspect ratio. The chip reads cleanly on the dark
+ *  poster background. */
+function drawLogoChip(
+  ctx: CanvasRenderingContext2D,
+  img: HTMLImageElement,
+  x: number,
+  y: number,
+  size: number
+): void {
+  roundRect(ctx, x, y, size, size, Math.round(size * 0.22));
+  ctx.fillStyle = "#ffffff";
+  ctx.fill();
+  const pad = size * 0.14;
+  const box = size - pad * 2;
+  const ar = img.naturalWidth / img.naturalHeight || 1;
+  const dw = ar >= 1 ? box : box * ar;
+  const dh = ar >= 1 ? box / ar : box;
+  ctx.drawImage(img, x + (size - dw) / 2, y + (size - dh) / 2, dw, dh);
+}
+
+/** Render the poster into `canvas`. Sizes the canvas to the chosen format.
+ *  Async because the logo image must decode before it can be drawn. */
+export async function renderPoster(canvas: HTMLCanvasElement, opts: PosterOptions): Promise<void> {
   const { w, h } = POSTER_SIZES[opts.format];
   canvas.width = w;
   canvas.height = h;
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
+  const logo = await loadLogo();
 
   // Background + sky glow (top-right).
   ctx.fillStyle = C.bg;
@@ -108,18 +133,24 @@ export function renderPoster(canvas: HTMLCanvasElement, opts: PosterOptions): vo
 
   const pad = Math.round(w * 0.093);
 
-  // Wordmark row.
+  // Wordmark row: logo chip + "CoTrackPro" (the emblem carries no text).
   const tile = Math.round(w * 0.092);
-  drawLogoTile(ctx, pad, pad, tile);
+  drawLogoChip(ctx, logo, pad, pad, tile);
   ctx.fillStyle = C.ink;
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
   ctx.font = `600 ${Math.round(w * 0.036)}px ${SANS}`;
   ctx.fillText("CoTrackPro", pad + tile + Math.round(w * 0.03), pad + tile / 2);
 
-  // Headline: shrink-to-fit (max 7 lines).
+  // Headline: shrink-to-fit (max 7 lines). The wide OG card scales to its
+  // height so the type doesn't overflow the short canvas.
   const maxTextW = w - pad * 2;
-  let fontSize = opts.format === "story" ? Math.round(w * 0.094) : Math.round(w * 0.08);
+  let fontSize =
+    opts.format === "story"
+      ? Math.round(w * 0.094)
+      : opts.format === "og"
+        ? Math.round(h * 0.1)
+        : Math.round(w * 0.08);
   ctx.font = `700 ${fontSize}px ${SANS}`;
   let lines = wrapText((s) => ctx.measureText(s).width, opts.message, maxTextW);
   while (lines.length > 7 && fontSize > 44) {

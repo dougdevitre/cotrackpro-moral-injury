@@ -73,4 +73,19 @@ describe("print documents", () => {
     expect(html).toContain("Sam");
     expect(html).toContain(BRAND.navy);
   });
+
+  it("embeds the CoTrackPro logo (inline data URI) in the header", () => {
+    const html = buildReflectionSummaryHtml({
+      roleLabel: "Attorney",
+      dateISO: "2026-01-01T00:00:00.000Z",
+      meters: [],
+      subs: [],
+      lead: "ok",
+      triage: [],
+      footnote: "Educational only.",
+    });
+    // Inlined so it resolves inside the blob: print window (no network/relative paths).
+    expect(html).toContain('src="data:image/jpeg;base64,');
+    expect(html).toContain('alt="CoTrackPro"');
+  });
 });
