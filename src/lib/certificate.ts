@@ -1,13 +1,5 @@
 import type { AgendaItem, CertificateData, CertificateInput, CourseTrack } from "../types";
-import { markSvg } from "./print/brand";
-
-function esc(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
+import { esc, markSvg } from "./print/brand";
 
 export interface CertificateContext {
   courseTitle: string;
