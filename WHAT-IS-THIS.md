@@ -1,7 +1,13 @@
 # What is this? (the simple version)
 
 *A plain-language guide to the CoTrackPro Moral Injury project. For the technical README, see
-[README.md](README.md).*
+[README.md](README.md). You can try the live app at
+[morality.cotrackpro.com](https://morality.cotrackpro.com/).*
+
+> **If you or someone you know is in crisis or thinking about self-harm, please reach out now.**
+> In the U.S., call or text **988** (Suicide & Crisis Lifeline), any hour. Outside the U.S.,
+> contact your local crisis line or a trusted clinician. This website is a place to reflect —
+> it is not an emergency service.
 
 ## What is this?
 

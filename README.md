@@ -1,5 +1,9 @@
 # Moral Injury Self-Reflection — CoTrackPro
 
+![Moral Injury Self-Reflection — confidential & non-diagnostic, for the family-law ecosystem](public/og.png)
+
+**🔗 Live app: [morality.cotrackpro.com](https://morality.cotrackpro.com/)**
+
 A confidential, **non-diagnostic** self-reflection and support toolkit for professionals in the
 family-law ecosystem (attorneys, GALs, evaluators, judges, mediators, parenting coordinators,
 therapists, caseworkers, court staff, and others).
