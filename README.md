@@ -30,7 +30,7 @@ No reflection answer, score, or note leaves the device unless you choose to expo
 ```bash
 npm install
 npm run dev        # local dev server (Vite)
-npm run test       # vitest — pure logic suite (122 tests)
+npm run test       # vitest — pure logic suite (121 tests)
 npm run typecheck  # tsc -b --noEmit
 npm run lint       # eslint
 npm run format     # prettier --write
@@ -162,7 +162,7 @@ src/
 ```
 
 The entire scoring / interpretation / triage / practice / climate / cost / export logic is **pure
-and unit-tested (122 tests)** — UI changes can never silently change how results are computed or
+and unit-tested (121 tests)** — UI changes can never silently change how results are computed or
 how exports are formatted. Test files live next to the modules they cover (`*.test.ts`).
 
 ---
