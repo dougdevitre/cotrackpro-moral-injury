@@ -36,14 +36,20 @@ export function esc(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
-/** The sky-tile check mark, sized for a document header. */
+/**
+ * The CoTrackPro heart mark, sized for a document header. Inlined (self-contained)
+ * so it prints without a network fetch and stays in sync with `public/logo.svg`.
+ */
 export function logoTile(px = 34): string {
-  return `<span style="display:inline-flex;width:${px}px;height:${px}px;border-radius:${Math.round(
-    px * 0.27
-  )}px;background:linear-gradient(${BRAND.sky2},${BRAND.skyDeep});align-items:center;justify-content:center">
-    <svg width="${Math.round(px * 0.66)}" height="${Math.round(
-    px * 0.66
-  )}" viewBox="0 0 64 64"><path d="M20 33.5 L28.5 42 L45 24" fill="none" stroke="#04121f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  return `<span style="display:inline-flex;width:${px}px;height:${px}px">
+    <svg width="${px}" height="${px}" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CoTrackPro">
+      <defs><linearGradient id="ctpDocPeople" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4aa8cb"/><stop offset="1" stop-color="#2f6690"/></linearGradient></defs>
+      <path d="M32 55C17.5 43.2 7 34.6 7 23.6 7 15.5 13 11 19.4 11 24.9 11 29.4 14.4 32 19 34.6 14.4 39.1 11 44.6 11 51 11 57 15.5 57 23.6 57 34.6 46.5 43.2 32 55Z" fill="#ffffff" stroke="#0b1b2b" stroke-width="4.6" stroke-linejoin="round"/>
+      <circle cx="24" cy="26.5" r="4.7" fill="url(#ctpDocPeople)"/>
+      <circle cx="40" cy="24.8" r="5.5" fill="url(#ctpDocPeople)"/>
+      <path d="M15.6 42.2c0-5.4 4.2-9.2 9.3-9.2 3 0 5.7 1.3 7.4 3.5 1.7-2.2 4.4-3.5 7.4-3.5 5.1 0 9.3 3.8 9.3 9.2v1.1H15.6Z" fill="url(#ctpDocPeople)"/>
+      <path d="M25.2 40.6l4.3 4.3 8.9-8.9" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </span>`;
 }
 
