@@ -1,14 +1,23 @@
 # Moral Injury Self-Reflection — CoTrackPro
 
-A confidential, **non-diagnostic** self-reflection for professionals in the family-law
-ecosystem (attorneys, GALs, evaluators, judges, mediators, caseworkers, and others).
+A confidential, **non-diagnostic** self-reflection and support toolkit for professionals in the
+family-law ecosystem (attorneys, GALs, evaluators, judges, mediators, parenting coordinators,
+therapists, caseworkers, court staff, and others).
 
-It separates **exposure** (morally difficult work encountered) from **personal distress**
-(how heavily it sits with the person), reflects both back as bands, and routes to support —
-and, optionally, repair. There is no single composite "score" and no verdict on the user.
+At its core it separates **exposure** (morally difficult work encountered) from **personal
+distress** (how heavily it sits with the person), reflects both back as bands, and routes to
+support — and, optionally, repair. There is no single composite "score" and no verdict on the
+user. Around that core sits a small toolkit: an accreditable CLE/CE course, in-the-moment
+decision aids, habit-building, a moral-climate check for leaders, and more.
 
 > **What it is not:** a clinical diagnosis, a validated psychometric instrument, a legal
 > assessment, or a professional/court record. See the in-app disclaimers and `src/content/copy.ts`.
+
+**Private by design.** Everything except the optional pledge wall runs entirely in the browser.
+No reflection answer, score, or note leaves the device unless you choose to export or print it.
+
+> **New here?** For a plain-language, non-technical overview of what this project is and what each
+> part does, see **[WHAT-IS-THIS.md](WHAT-IS-THIS.md)**.
 
 ---
 
@@ -16,10 +25,11 @@ and, optionally, repair. There is no single composite "score" and no verdict on 
 
 ```bash
 npm install
-npm run dev        # local dev server
-npm run test       # vitest (pure logic suite)
-npm run typecheck  # tsc, no emit
+npm run dev        # local dev server (Vite)
+npm run test       # vitest — pure logic suite (122 tests)
+npm run typecheck  # tsc -b --noEmit
 npm run lint       # eslint
+npm run format     # prettier --write
 npm run build      # production build -> dist/
 npm run preview    # serve the built dist/
 ```
@@ -30,42 +40,96 @@ Requires **Node 20+**.
 
 ## Modules
 
-The app is a small multi-part toolkit with a shared top nav:
+The app is a multi-part toolkit sharing one top nav (`src/components/Nav.tsx`). An optional
+onboarding step captures a role and routes newcomers to a starting module.
 
-- **Course (CLE/CE)** — wraps everything into an accreditable self-study course with **role-specific tracks**. Pick a track (attorney, judge, GAL/child's attorney, custody evaluator, mediator, parenting coordinator, therapist, social worker/caseworker, court staff, paralegal/advocate, or other) and the learning objectives, the knowledge-check post-test, and the credit-context guidance all adapt to that role's accrediting world (state bar/MCLE, judicial-education authority, ASWB/APA/NBCC, court ADR/mediator boards, etc.). Includes a timed agenda, a module checklist, a graded post-test, a course evaluation, a generated **Certificate of Completion** (course ID + unique completion ID + provider fields + disclaimer), and a per-track **accreditation submission packet** (.md). **Not pre-accredited** — the provider obtains a provider number and applies per jurisdiction; the disclaimer and "your board is the final authority" caveat are baked in throughout.
-- **Reflect** — the confidential moral-injury self-reflection (role → 18+ items → two-index result + triage).
-- **Decide** — guided in-the-moment ethical decision aids (Blanchard & Peale's ethics check, a pressure-pause grounded in ethical-fading research, a child-centered lens, and the Markkula five lenses).
-- **Practice** — build "if-then" habits (implementation intentions; Gollwitzer, 1999) and standing commitments, tailored to your reflection profile when present. Export as Markdown, or download a `.ics` weekly reminder that uses your own calendar (no backend). Optional, on-device-only persistence.
-- **Standards** — a plain-language reference to the ABA Model Rules of Professional Conduct most relevant to family-law work, grouped by category, each linking to the official ABA text. Summaries are our own paraphrase (rule text/comments are ABA-copyrighted); a jurisdiction caveat is shown throughout. The attorney reflection items are tied to specific rules, and the attorney results page surfaces "standards to revisit."
-- **The long view** — shows how a single action or inaction ripples across a child's life (in the moment → why it lands → over a lifetime), pairing every harm pathway with the protective "leverage" move in the professional's control. Grounded in the ACE study (Felitti et al., 1998), toxic-stress science (Center on the Developing Child), interparental-conflict research (Cummings & Davies; Amato), and the AAP's safe/stable/nurturing-relationships framework, with probabilistic (not deterministic) language enforced by a test. Each pathway's leverage can be added to the Practice plan as a ready-made if-then habit in one click.
-- **Calculator** — a transparent, **educational** cost & dividend estimator: a conservative figure for the annual cost of unaddressed moral injury, and the protective "dividend" from reducing it. Caseload vs. jurisdiction modes; every coefficient is a named, editable assumption (no hidden multipliers). Exposure pre-fills from a completed reflection and the achievable reduction from a leaders' climate check, both still editable. Pure model in `src/lib/costDividend.ts`, fully unit-tested. On-device only.
-- **Pledge wall** — an **optional, public** space where professionals stand behind one protective commitment. This is the one feature that leaves the device; it is opt-in, gated, and structurally walled off from the private reflection (see [Community pledge wall](#community-pledge-wall-optional-backend) below). Ships **dormant** until a datastore is provisioned.
-- **About & evidence** (footer link) — consolidates the design principles (reflective not accusatory, leverage not dread, probabilistic not deterministic, private by design, educational not advice) and the full grouped evidence base with links.
+- **Course (CLE/CE)** — wraps everything into an accreditable self-study course with
+  **role-specific tracks**. Pick a track (attorney, judge, GAL/child's attorney, custody
+  evaluator, mediator, parenting coordinator, therapist, social worker/caseworker, court staff,
+  paralegal/advocate, or other) and the learning objectives, the knowledge-check post-test, and
+  the credit-context guidance all adapt to that role's accrediting world (state bar/MCLE,
+  judicial-education authority, ASWB/APA/NBCC, court ADR/mediator boards, etc.). Includes a timed
+  agenda, a module checklist, a graded post-test, a course evaluation, a generated **Certificate
+  of Completion** (course ID + unique completion ID + provider fields + disclaimer), and a
+  per-track **accreditation submission packet** (`.md`). **Not pre-accredited** — the provider
+  obtains a provider number and applies per jurisdiction; the "your board is the final authority"
+  caveat is baked in throughout.
+- **Reflect** — the confidential moral-injury self-reflection (role → 18+ items → two-index result
+  + triage). Exposure and distress each map to a band; no composite score.
+- **Decide** — guided in-the-moment ethical decision aids (Blanchard & Peale's ethics check, a
+  pressure-pause grounded in ethical-fading research, a child-centered lens, and the Markkula five
+  lenses).
+- **Practice** — build "if-then" habits (implementation intentions; Gollwitzer, 1999) and standing
+  commitments, tailored to your reflection profile when present. Export as Markdown or download a
+  `.ics` weekly reminder that uses your own calendar (no backend). Optional, on-device persistence.
+- **Commit** — a signable **moral-injury-prevention declaration**: affirm a set of first-person
+  protective commitments (mapped to the support · ethics · repair · systems tiers), add a personal
+  line, and generate a printable declaration/certificate with a unique declaration ID.
+- **Encourage** — a private log of **moral wins** — small, values-aligned actions worth
+  remembering. On-device only, opt-in, with a printable summary.
+- **Share** — a **Share Studio** that renders a shareable poster (PNG) carrying a chosen
+  encouragement message and role — no scores or answers. Prefills the role from a completed
+  reflection or from onboarding.
+- **Standards** — a plain-language reference to the ABA Model Rules of Professional Conduct most
+  relevant to family-law work, grouped by category, each linking to the official ABA text.
+  Summaries are our own paraphrase (rule text/comments are ABA-copyrighted); a jurisdiction caveat
+  is shown throughout. Attorney reflection items are tied to specific rules, and the attorney
+  results page surfaces "standards to revisit."
+- **The long view** — shows how a single action or inaction ripples across a child's life (in the
+  moment → why it lands → over a lifetime), pairing every harm pathway with the protective
+  "leverage" move in the professional's control. Grounded in the ACE study (Felitti et al., 1998),
+  toxic-stress science (Center on the Developing Child), interparental-conflict research (Cummings
+  & Davies; Amato), and the AAP's safe/stable/nurturing-relationships framework, with probabilistic
+  (not deterministic) language enforced by a test. Each pathway's leverage can be added to the
+  Practice plan as a ready-made if-then habit in one click.
+- **Leaders** — a **moral-climate check** for supervisors and firm/court leaders across three
+  dimensions (psychological safety, moral load, feeling backed-up), reflected back as banded
+  results, plus a printable leader pledge and a moral-debrief template. Feeds the Calculator's
+  achievable-reduction input.
+- **Calculator** — a transparent, **educational** cost & dividend estimator: a conservative figure
+  for the annual cost of unaddressed moral injury, and the protective "dividend" from reducing it.
+  Caseload vs. jurisdiction modes; every coefficient is a named, editable assumption (no hidden
+  multipliers). Exposure pre-fills from a completed reflection and the achievable reduction from
+  the leaders' climate check, both still editable. Pure model in `src/lib/costDividend.ts`.
+- **Pledge wall** — an **optional, public** space where professionals stand behind one protective
+  commitment. This is the one feature that leaves the device; it is opt-in, gated, and structurally
+  walled off from the private reflection (see [Community pledge wall](#community-pledge-wall-optional-backend)).
+  Ships **dormant** until a datastore is provisioned.
+- **About & evidence** (footer link) — consolidates the design principles (reflective not
+  accusatory, leverage not dread, probabilistic not deterministic, private by design, educational
+  not advice) and the full grouped evidence base with links.
+
+A daily-prompt widget and a personal streak counter (both on-device only) nudge lightweight
+recurring reflection.
 
 ## Project structure
 
 ```
+api/
+├── pledges.ts               # GET (paginated public list) + POST (submit) — Vercel Node Function
+├── report.ts                # POST to report a pledge (auto-hide after 3 reports)
+└── _lib.ts                  # shared server helpers (DynamoDB access, salted-IP rate limiting)
+
 src/
 ├── main.tsx                 # entry; self-hosted font imports
-├── App.tsx                  # top-level view router (home / reflect / decide / practice)
+├── App.tsx                  # top-level view router + onboarding routing
+├── types.ts                 # shared types (incl. the View union)
 ├── index.css                # theme tokens + component styles
-├── types.ts                 # shared types
 ├── data/
-│   ├── roles.ts             # role list + lenses
+│   ├── roles.ts             # role list + lenses (12 roles)
 │   ├── items.ts             # CORE item bank (all roles)
 │   ├── ethicsItems.ts       # ⚠️ attorney ethics PLACEHOLDER — replace with repo list
 │   ├── itemSet.ts           # assembles core + role-specific items
 │   ├── decisionGuides.ts    # Decide module content (attributed frameworks)
 │   ├── habits.ts            # Practice if-then habit library + cue suggestions
+│   ├── commitments.ts       # Commit declaration commitments (support/ethics/repair/systems)
 │   ├── rules.ts             # ABA Model Rules subset (paraphrased + official links)
-│   ├── rules.test.ts        # rule integrity + item ruleId resolution tests
 │   ├── longView.ts          # Long-view ripple pathways + evidence base
-│   ├── longView.test.ts     # pathway integrity + probabilistic-language test
 │   ├── course.ts            # CLE course: objectives, timed agenda, role objectives
 │   ├── tracks.ts            # role-specific CLE/CE tracks + credit-context guidance
 │   └── postTest.ts          # knowledge-check bank + role questions + assembleTest
 ├── content/
-│   ├── config.ts            # scales, crisis resource (env-overridable), thresholds
+│   ├── config.ts            # scales, crisis resource + threshold (env-overridable)
 │   ├── providerConfig.ts    # provider/accreditation fields (env-overridable)
 │   └── copy.ts              # all user-facing copy, disclaimers, citations
 ├── lib/
@@ -73,20 +137,29 @@ src/
 │   ├── interpret.ts         # quadrant lead + driver line (pure)
 │   ├── triage.ts            # flag-driven triage cards (pure)
 │   ├── practice.ts          # habit tailoring + markdown/.ics export (pure)
-│   ├── storage.ts           # opt-in, on-device-only plan persistence
+│   ├── climate.ts           # Leaders moral-climate scoring (pure)
+│   ├── costDividend.ts      # Calculator cost/dividend model (pure)
+│   ├── streak.ts            # daily-prompt streak logic (pure, TZ-safe)
+│   ├── storage.ts           # opt-in, on-device-only persistence (plans, wins, streak, climate)
 │   ├── courseProgress.ts    # grading, completion eligibility, completion id (pure)
-│   ├── course.test.ts       # grading/eligibility/certificate/packet tests
 │   ├── certificate.ts       # certificate HTML + accreditation packet builders (pure)
 │   ├── schema.ts            # zod result schema + payload builder
-│   ├── scoring.test.ts      # vitest suite (scoring/interpret/triage/schema)
-│   └── practice.test.ts     # vitest suite (tailoring/intentions/.ics)
-└── components/              # Nav, Home, ReflectFlow, Intro, RoleSelect, Assessment, Results,
-                             # CourseHub, PostTest, DecideHub, GuideRunner, PracticeHub,
-                             # RulesReference, LongView, About, Footer
+│   ├── pledge.ts            # pledge validation/shaping (pure, shared client+server)
+│   ├── wallApi.ts           # client-side pledge-wall fetch helpers
+│   ├── wallHandlers.ts      # pledge-wall request handlers (tested vs in-memory fake)
+│   ├── download.ts          # generic file-download helper
+│   ├── print/              # printable-document builders (layout, brand, documents)
+│   └── share/              # share-poster canvas renderer
+└── components/              # Nav, Home, Onboarding, ReflectFlow, Intro, RoleSelect, Assessment,
+                             # Results, CourseHub, PostTest, DecideHub, GuideRunner, PracticeHub,
+                             # CommitDeclaration, EncourageHub, ShareStudio, RulesReference,
+                             # LongView, LeadersHub, MoralInjuryCalculator, PledgeWall,
+                             # DailyPrompt, About, Footer, ErrorBoundary, icons
 ```
 
-The entire scoring/interpretation/triage/practice logic is **pure and unit-tested** (58 tests) —
-UI changes can never silently change how results are computed or how exports are formatted.
+The entire scoring / interpretation / triage / practice / climate / cost / export logic is **pure
+and unit-tested (122 tests)** — UI changes can never silently change how results are computed or
+how exports are formatted. Test files live next to the modules they cover (`*.test.ts`).
 
 ---
 
@@ -110,7 +183,8 @@ list from `track.cotrackpro.com`:
 
 ## Configuration
 
-Crisis resource and threshold are configurable without code changes:
+Crisis resource, threshold, and provider fields are configurable without code changes. Set them
+in `.env` / your host's env settings for non-US deployments.
 
 | Env var | Default |
 |---------|---------|
@@ -122,8 +196,9 @@ Crisis resource and threshold are configurable without code changes:
 | `VITE_COURSE_AUTHOR_QUALS` | `[Author qualifications / bio]` |
 | `VITE_PROVIDER_CONTACT` | `[Provider contact email]` |
 
-Set these in `.env` / your host's env settings for non-US deployments. The provider fields populate the
-CLE certificate and accreditation packet — set them before offering the course for credit.
+The crisis card appears once the distress index reaches `CRISIS_THRESHOLD` (default `50`) in
+`src/content/config.ts`. The provider fields populate the CLE certificate and accreditation
+packet — set them before offering the course for credit.
 
 ---
 
@@ -200,24 +275,18 @@ region, and credentials are all present.
 
 ---
 
-## Privacy & safety (read before deploying)
+## Deployment
 
-- **The private reflection has no backend and is not persisted by default.** Reflection answers
-  live in React state for the session only and are never transmitted. This is intentional: the
-  data is health-adjacent and potentially self-incriminating, so the safest posture is to not
-  store it. The **pledge wall** above is the single, opt-in exception, and it receives none of
-  this data.
-- The **Copy private summary** button puts a JSON result on the user's clipboard — it does not
-  send anything anywhere.
-- If you later add a consented, identity-linked store, treat it as sensitive: encrypt at rest,
-  do not link to case records, gate behind explicit consent, and consider discoverability risk.
-- Fonts are **self-hosted** via `@fontsource` (no calls to Google Fonts).
-- `index.html` sets `noindex`; the app is meant to be embedded/linked, not crawled.
+The app is a static single-page app (build output `dist/`) with optional serverless `/api`
+functions for the pledge wall. See **[`DEPLOY.md`](DEPLOY.md)** for hosting options and the Vercel
+setup.
 
-See `DEPLOY.md` for Vercel and AWS S3 + CloudFront instructions.
+## Tech stack
 
----
+React 18 · TypeScript · Vite · Vitest · Zod · self-hosted Geist Sans · Vercel Analytics / Speed
+Insights. Pledge-wall backend: Vercel Node Functions + Amazon DynamoDB (`@aws-sdk/lib-dynamodb`).
 
 ## License
 
-Proprietary — see `LICENSE`.
+See [`LICENSE`](LICENSE). This repository is `UNLICENSED` (all rights reserved) unless stated
+otherwise there.
