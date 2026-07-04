@@ -71,7 +71,27 @@ function roundRect(
   ctx.closePath();
 }
 
-function drawLogoTile(ctx: CanvasRenderingContext2D, x: number, y: number, size: number): void {
+/**
+ * The brand mark, loaded once from the same-origin `/logo.svg`. Same-origin
+ * (and the SVG is self-contained) so drawing it never taints the canvas — the
+ * PNG export keeps working. Cached across renders.
+ */
+let logoImg: HTMLImageElement | null = null;
+function ensureLogoImage(onLoad: () => void): HTMLImageElement | null {
+  if (typeof Image === "undefined") return null;
+  if (!logoImg) {
+    logoImg = new Image();
+    logoImg.src = "/logo.svg";
+  }
+  if (!(logoImg.complete && logoImg.naturalWidth > 0)) {
+    // Single handler; a later render overwrites it rather than stacking.
+    logoImg.onload = onLoad;
+  }
+  return logoImg;
+}
+
+/** Simple gradient-tile + checkmark shown until the logo SVG has decoded. */
+function drawFallbackTile(ctx: CanvasRenderingContext2D, x: number, y: number, size: number): void {
   const grad = ctx.createLinearGradient(x, y, x, y + size);
   grad.addColorStop(0, C.sky);
   grad.addColorStop(1, C.skyDeep);
@@ -87,6 +107,21 @@ function drawLogoTile(ctx: CanvasRenderingContext2D, x: number, y: number, size:
   ctx.lineTo(x + size * 0.44, y + size * 0.67);
   ctx.lineTo(x + size * 0.72, y + size * 0.36);
   ctx.stroke();
+}
+
+function drawLogoTile(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  size: number,
+  redraw: () => void
+): void {
+  const img = ensureLogoImage(redraw);
+  if (img && img.complete && img.naturalWidth > 0) {
+    ctx.drawImage(img, x, y, size, size);
+  } else {
+    drawFallbackTile(ctx, x, y, size);
+  }
 }
 
 /** Render the poster into `canvas`. Sizes the canvas to the chosen format. */
@@ -110,7 +145,7 @@ export function renderPoster(canvas: HTMLCanvasElement, opts: PosterOptions): vo
 
   // Wordmark row.
   const tile = Math.round(w * 0.092);
-  drawLogoTile(ctx, pad, pad, tile);
+  drawLogoTile(ctx, pad, pad, tile, () => renderPoster(canvas, opts));
   ctx.fillStyle = C.ink;
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
