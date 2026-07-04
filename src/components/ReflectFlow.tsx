@@ -65,6 +65,10 @@ export function ReflectFlow({ onComplete, onToast, onGoToPractice }: Props) {
 
   return (
     <>
+      {/* The intro carries the visible <h1>; later steps lead with section
+          headings, so provide one stable page heading for those states. */}
+      {stage !== "intro" && <h1 className="mi-sr-only">Moral Injury Self-Reflection</h1>}
+
       {stage === "intro" && <Intro onBegin={() => setStage("role")} />}
 
       {stage === "role" && (

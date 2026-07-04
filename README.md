@@ -4,6 +4,11 @@
 
 **🔗 Live app: [morality.cotrackpro.com](https://morality.cotrackpro.com/)**
 
+![Node ≥20](https://img.shields.io/badge/Node-%E2%89%A520-3c873a)
+![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6)
+![Tests: vitest](https://img.shields.io/badge/tests-vitest-6E9F18)
+![License: UNLICENSED](https://img.shields.io/badge/license-UNLICENSED-lightgrey)
+
 A confidential, **non-diagnostic** self-reflection and support toolkit for professionals in the
 family-law ecosystem (attorneys, GALs, evaluators, judges, mediators, parenting coordinators,
 therapists, caseworkers, court staff, and others).
@@ -22,6 +27,21 @@ No reflection answer, score, or note leaves the device unless you choose to expo
 
 > **New here?** For a plain-language, non-technical overview of what this project is and what each
 > part does, see **[WHAT-IS-THIS.md](WHAT-IS-THIS.md)**.
+
+---
+
+## Contents
+
+- [Quickstart](#quickstart)
+- [Modules](#modules)
+- [Project structure](#project-structure)
+- [Replacing the attorney ethics list](#replacing-the-attorney-ethics-list)
+- [Configuration](#configuration)
+- [Community pledge wall (optional backend)](#community-pledge-wall-optional-backend)
+- [Deployment](#deployment)
+- [Tech stack](#tech-stack)
+- [Accessibility](#accessibility)
+- [License & contributing](#license--contributing)
 
 ---
 
@@ -290,7 +310,24 @@ setup.
 React 18 · TypeScript · Vite · Vitest · Zod · self-hosted Geist Sans · Vercel Analytics / Speed
 Insights. Pledge-wall backend: Vercel Node Functions + Amazon DynamoDB (`@aws-sdk/lib-dynamodb`).
 
-## License
+## Accessibility
+
+Accessibility is treated as a feature, not an afterthought:
+
+- A **"Skip to content"** link, semantic landmarks, and a visible keyboard focus ring
+  (`:focus-visible`) throughout.
+- The onboarding dialog uses `role="dialog"` + `aria-modal`, moves focus into itself, and closes
+  on <kbd>Esc</kbd>; the assessment scale is a labelled `radiogroup` with arrow-key support.
+- Motion is disabled under `prefers-reduced-motion: reduce`.
+
+Verified with an automated **axe-core** pass (WCAG 2.1 A/AA + best-practice) across every view plus
+the onboarding and reflection flows — **0 violations** — alongside manual keyboard and
+reduced-motion checks. Automated tooling can't catch everything; please open an issue if you hit a
+barrier.
+
+## License & contributing
 
 See [`LICENSE`](LICENSE). This repository is `UNLICENSED` (all rights reserved) unless stated
-otherwise there.
+otherwise there — it is a proprietary CoTrackPro project, not open source. External contributions
+are not being accepted at this time; please reach out to the CoTrackPro team before reusing or
+building on this code.
