@@ -1,4 +1,5 @@
 import type { AgendaItem, CertificateData, CertificateInput, CourseTrack } from "../types";
+import { markSvg } from "./print/brand";
 
 function esc(s: string): string {
   return s
@@ -56,6 +57,8 @@ export function buildCertificateHtml(d: CertificateData): string {
   @page { size: letter landscape; margin: 0.6in; }
   body { font-family: Georgia, "Times New Roman", serif; color:#22282a; margin:0; padding:40px; }
   .cert { border:2px solid #3c685f; border-radius:6px; padding:40px 48px; max-width:900px; margin:0 auto; }
+  .brand { display:flex; align-items:center; gap:9px; margin-bottom:18px; }
+  .brandname { font-weight:bold; letter-spacing:.01em; font-size:16px; color:#22282a; }
   .kick { letter-spacing:.22em; text-transform:uppercase; font-size:12px; color:#3c685f; font-weight:bold; }
   h1 { font-size:30px; margin:8px 0 4px; }
   .sub { font-size:15px; color:#56605d; margin:0 0 20px; }
@@ -71,6 +74,7 @@ export function buildCertificateHtml(d: CertificateData): string {
 </style></head>
 <body>
   <div class="cert">
+    <div class="brand">${markSvg(30)}<span class="brandname">CoTrackPro</span></div>
     <div class="kick">Certificate of Completion</div>
     <h1>${esc(d.courseTitle)}</h1>
     <p class="sub">Self-study continuing-education activity · Course ID ${esc(d.courseId)}</p>
